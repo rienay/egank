@@ -106,11 +106,10 @@
         <div class="footer-col">
             <h3 class="footer-title">Menu Cepat</h3>
             <ul class="footer-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Profil Saya</a></li>
-                <li><a href="#">Pedoman Magang</a></li>
-                <li><a href="#">Ajukan Surat</a></li>
-                <li><a href="#">Riwayat Surat</a></li>
+                <li><a href="/home" class="{{ request()->is('home') ? 'active' : '' }}">Home</a></li>
+                <li><a href="/pedoman" class="{{ request()->is('pedoman*') ? 'active' : '' }}">Pedoman Magang</a></li>
+                <li><a href="/ajukan" class="{{ request()->is('ajukan*') ? 'active' : '' }}">Ajukan Surat</a></li>
+                <li><a href="/riwayat" class="{{ request()->is('riwayat*') ? 'active' : '' }}">Riwayat Surat</a></li>
             </ul>
         </div>
 

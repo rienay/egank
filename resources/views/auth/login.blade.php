@@ -2,220 +2,248 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Sistem Informasi Akademik - PNC</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="Sistem Informasi Akademik solusi terbaik Universitas.">
     
     <link rel="icon" type="image/jpeg" href="{{ asset('assets/pnc.jpg') }}">
-    
     <link href="https://assets.siakadcloud.com/assets/v1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://assets.siakadcloud.com/assets/v1/css/customs/login-v2.css" rel="stylesheet" type="text/css">
 
     <style>
+        /* Reset & Base Style */
+        * {
+            box-sizing: border-box;
+        }
+
         body.login-page {
-            background-image: url(img/logopnc.png); 
+            background-color: #f4f7f6;
             background-image: url('https://www.transparenttextures.com/patterns/always-grey.png');
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         .container {
             width: 100%;
+            max-width: 1000px;
             display: flex;
             justify-content: center;
         }
 
         .form-box {
-            display: flex ; 
-            flex-wrap: nowrap ; 
+            display: flex;
+            flex-direction: row;
             background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             overflow: hidden;
-            padding: 0 ; 
-            
-            height: 90% ; 
-            width: 100% ;
-            max-width: 70% ; 
+            width: 100%;
+            min-height: 550px;
         }
 
+        /* Sisi Kiri: Identitas Kampus */
         .univ-identity-box {
-            width: 58% ;
-            flex: 0 0 58% ; 
-            box-sizing: border-box !important; 
+            flex: 1.2;
             background: #8ba2b5;
-            background-size: cover !important; 
-            
-            display: flex !important;
+            background-image: linear-gradient(rgba(139, 162, 181, 0.8), rgba(44, 62, 80, 0.9)), url("{{ asset('img/logopnc.png') }}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
             flex-direction: column;
-            padding: 40px !important;
+            justify-content: flex-end;
+            padding: 40px;
+            color: white;
         }
 
-        .univ-identity-box .univ-text {
-            margin-top: auto; 
-            position: relative;
-            z-index: 2;
-        }
+        .univ-text h4 { margin-bottom: 5px; opacity: 0.9; font-weight: 300; }
+        .univ-text h2 { margin: 0; font-size: 28px; line-height: 1.2; }
+        .univ-text h3 { margin: 5px 0 0 0; font-size: 22px; }
 
+        /* Sisi Kanan: Form Login */
         .form-login {
-            width: 42% !important;
-            flex: 0 0 42% !important; 
+            flex: 0.8;
             background-color: #fff;
-            box-sizing: border-box !important;
-
-            display: flex !important;
+            display: flex;
             flex-direction: column;
-            justify-content: center; 
-            padding: 0 40px !important;
-        }
-        
-        .form-login .logo {
-            width: auto;
-            max-width: 100px;
-            border-radius: 0;
-            margin: 0 auto 20px auto !important;
+            justify-content: center;
+            padding: 40px;
         }
 
+        .form-login .logo {
+            width: 80px;
+            height: auto;
+            margin: 0 auto 20px auto;
+            display: block;
+        }
+
+        /* Form Components */
         .title-login-email {
             position: relative;
             text-align: center;
-            margin: 20px 0; 
-            z-index: 1; 
+            margin: 25px 0;
         }
         .title-line {
             position: absolute;
-            top: 50%; 
+            top: 50%;
             left: 0;
             width: 100%;
             height: 1px;
-            background-color: #e0e0e0; 
-            z-index: -1; 
+            background-color: #eee;
+            z-index: 1;
         }
         .title-text {
-            display: inline-block;
-            background-color: #ffffff; 
-            padding: 0 15px; 
-            color: #8ba2b5; 
-            margin: 0;
+            position: relative;
+            background-color: #fff;
+            padding: 0 15px;
+            color: #999;
             font-size: 13px;
+            z-index: 2;
         }
 
-        @media (max-width: 768px) {
-            body.login-page { padding: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 13px; color: #333; }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #8ba2b5;
+        }
+
+        .btn-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .btn-google:hover { background: #f9f9f9; }
+
+        .btn-submit {
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover { background: #1a252f; }
+
+        /* Media Queries (Responsive) */
+        @media (max-width: 850px) {
             .form-box {
-                flex-direction: column !important;
-                height: auto !important; 
+                flex-direction: column;
+                max-width: 500px;
+                min-height: auto;
             }
-            .univ-identity-box, .form-login {
-                width: 100% !important;
-                flex: 0 0 100% !important;
+            .univ-identity-box {
+                padding: 30px;
+                min-height: 200px;
+                text-align: center;
+                justify-content: center;
             }
-            .univ-identity-box { min-height: 250px !important; }
-            .form-login { padding: 30px 20px !important; }
+            .form-login { padding: 40px 25px; }
+            .univ-text h2 { font-size: 22px; }
+            .univ-text h3 { font-size: 18px; }
+        }
+
+        @media (max-width: 480px) {
+            body.login-page { padding: 10px; }
+            .form-login { padding: 30px 15px; }
+            .form-control { font-size: 16px; } /* Mencegah auto-zoom di iOS */
         }
     </style>
 </head>
 
 <body class="login-page">
     <div class="container">
-        <div style="width: 100%; margin: 0; display: flex; justify-content: center;">
-            <div class="form-box">
+        <div class="form-box">
+            <div class="univ-identity-box">
+                <div class="univ-text">
+                    <h4>Selamat Datang</h4>
+                    <h2>Sistem Informasi Pengajuan Magang</h2>
+                    <h3><b>Politeknik Negeri Cilacap</b></h3>
+                </div>
+            </div>
+
+            <div class="form-login">
+                <img src="{{ asset('img/logopnc.png') }}" class="logo" alt="Logo PNC">
                 
-                <div class="univ-identity-box">
-                    <div class="univ-text">
-                        <h4 class="welcome text-light">Selamat Datang</h4>
-                        <div class="clearfix"></div>
-                        <h2 class="no-margin text-light">Sistem Informasi Akademik</h2>
-                        <h3 class="no-margin"><b>Politeknik Negeri Cilacap</b></h3>
-                    </div>
-                </div>
+                <span style="font-size:20px; font-weight: 700; display: block; text-align: center; color: #2c3e50;">Masuk dan Verifikasi</span>
+                
+                <p style="margin: 10px 0 25px 0; text-align: center; font-size: 13px; color: #777; line-height: 1.5;">
+                    Sistem Informasi Layanan Surat Pengantaran Magang
+                </p>
 
-                <div class="form-login" align="center">
-                    <img src="{{ asset('img/logopnc.png') }}" class="logo" alt="Logo PNC">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
                     
-                    <b>
-                        <span class="text-center" style="font-size:20px; font-weight: 600; display: block">Masuk dan Verifikasi</span>
-                    </b>
-                    <p style="margin-bottom: 15px;">
-                        <strong>Baru!</strong> Nikmati kemudahan sistem autentikasi tunggal untuk mengakses semua layanan dengan satu akun.
-                    </p>
+                    <a href="#" class="btn-google">
+                        <img src="https://quantum.sevima.com/assets/images/logo-google.svg" width="18" alt="Google Logo"> 
+                        Masuk dengan Google
+                    </a>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissable" style="text-align: left;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <span>Email atau Password salah.</span>
+                    <div class="title-login-email">
+                        <span class="title-line"></span>
+                        <span class="title-text">atau gunakan email</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Email/NIM</strong><span style="color:red">*</span></label>
+                        <input type="email" name="email" class="form-control" placeholder="contoh: user@pnc.ac.id" required autofocus value="{{ old('email') }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Password</strong><span style="color:red">*</span></label>
+                        <div style="position: relative;">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+                            <span id="iconshow" onclick="showPass()" class="fa fa-eye-slash" style="position: absolute; right: 12px; top: 14px; cursor: pointer; color: #aaa;"></span>
                         </div>
-                    @endif
+                    </div>
 
-                    <form method="POST" action="{{ route('login') }}" id="form-login" style="width: 100%;">
-                        @csrf
-                        <div class="login">
-                            
-                            <div style="margin: 0 0 20px 0;">
-                                <a href="#" class="btn btn-default btn-block" style="font-weight: 600;">
-                                    <img src="https://quantum.sevima.com/assets/images/logo-google.svg" alt=""> Google
-                                </a>
-                            </div>
-                            
-                            <div class="title-login-email">
-                                <span class="title-line"></span>
-                                <p class="title-text">atau lanjutkan dengan</p>
-                            </div>
-                            
-                            <div class="form-group" style="text-align: left">
-                                <span><strong>Email/akun pengguna</strong></span><span style="color:red">*</span>
-                                <input type="email" name="email" id="email" class="form-control input-line" placeholder="Masukkan email yang terdaftar" required autofocus value="{{ old('email') }}">
-                            </div>
+                @if (Route::has('password.request'))
+                    <div style="text-align: right; margin-bottom: 20px;">
+                        <a href="{{ route('password.request') }}" style="font-size: 12px; color: #8ba2b5; text-decoration: none; font-weight: 600;">Lupa kata sandi?</a>
+                    </div>
+                @endif
 
-                            <div class="form-group" style="text-align: left; margin-bottom: -5px;">
-                                <span><strong>Password</strong></span><span style="color:red">*</span>
-                                <div class="password" style="position: relative;">
-                                    <input type="password" id="password" name="password" class="form-control input-line" placeholder="Masukkan password" required>
-                                    <span id="iconshow" onclick="showPass()" class="fa fa-eye-slash" style="position: absolute; right: 10px; top: 12px; cursor: pointer;"></span>
-                                </div>
-                            </div>
-
-                            @if (Route::has('password.request'))
-                                <a style="font-size: 13px; padding: 10px 0px 25px 0px; text-decoration-line: underline; font-weight: 600;" href="{{ route('password.request') }}" class="text-center pull-right">Lupa kata sandi?</a>
-                            @endif
-                            <div class="clearfix"></div>
-
-                            <div class="form-group" align="center">
-                                <button type="submit" class="btn btn-flat btn-primary btn-block btn-login">Masuk</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- <div style="margin-top: 30px; font-size: 14px">
-                        <small>
-                            <span class="text-center text-muted">Powered By</span>
-                        </small>
-                        <span class="text-center text-grey">
-                            <a href="#" target="_blank"><img width="120" src="https://assets.siakadcloud.com/assets/v1/img/logo-sevima-platform-200.png" alt="Sevima"></a>
-                        </span>
-                    </div> -->
-                </div>
+                    <button type="submit" class="btn-submit">Login</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="https://assets.siakadcloud.com/assets/v1/js/external/jquery.min.js"></script>
-    <script type="text/javascript">
+    <script>
         function showPass() {
-            var passInput = document.getElementById("password");
-            var icon = document.getElementById("iconshow");
+            const passInput = document.getElementById("password");
+            const icon = document.getElementById("iconshow");
             
             if (passInput.type === 'password') {
                 passInput.type = 'text';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
             } else {
                 passInput.type = 'password';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
             }
         }
     </script>
