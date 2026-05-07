@@ -20,22 +20,47 @@ class PengajuanSuratController extends Controller
     {
         $user = Auth::user();
 
-        // Untuk Admin, tampilkan semua. Jika mahasiswa, tampilkan miliknya saja.
-        if ($user && $user->role === 'admin') {
-            $pengajuans = PengajuanSurat::with(['mahasiswa', 'magang'])->latest()->paginate(10);
-        } else {
-            $pengajuans = PengajuanSurat::where('mahasiswa_id', Auth::id())->with(['mahasiswa', 'magang'])->latest()->paginate(10);
+        // Basis query: admin melihat semua, mahasiswa hanya data miliknya.
+        $query = PengajuanSurat::with(['mahasiswa', 'magang']);
+        $statsQuery = PengajuanSurat::query();
+
+        if (!$user || $user->role !== 'admin') {
+            $query->where('mahasiswa_id', Auth::id());
+            $statsQuery->where('mahasiswa_id', Auth::id());
         }
+
+        // Filter status
+        $status = request('status');
+        if (in_array($status, ['pending', 'disetujui', 'ditolak'], true)) {
+            $query->where('status', $status);
+        }
+
+        // Pencarian berdasarkan data surat dan data magang terkait
+        $search = trim((string) request('search', ''));
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'like', "%{$search}%")
+                  ->orWhere('jenis_surat', 'like', "%{$search}%")
+                  ->orWhereHas('magang', function ($magangQuery) use ($search) {
+                      $magangQuery->where('nim', 'like', "%{$search}%")
+                                  ->orWhere('nama', 'like', "%{$search}%")
+                                  ->orWhere('perusahaan', 'like', "%{$search}%")
+                                  ->orWhere('prodi', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $pengajuans = $query->latest()->paginate(10)->withQueryString();
         
         // Ambil data pengajuan magang untuk modal create
         $magangList = PengajuanMagang::where('status', 'disetujui')
                         ->whereDoesntHave('pengajuanSurats')
                         ->get();
         
-        // Hitung statistik untuk kartu ringkasan
-        $total_pending = PengajuanSurat::where('status', 'pending')->count();
-        $total_disetujui = PengajuanSurat::where('status', 'disetujui')->count();
-        $total_ditolak = PengajuanSurat::where('status', 'ditolak')->count();
+        // Hitung statistik untuk kartu ringkasan sesuai cakupan role.
+        $total_pending = (clone $statsQuery)->where('status', 'pending')->count();
+        $total_disetujui = (clone $statsQuery)->where('status', 'disetujui')->count();
+        $total_ditolak = (clone $statsQuery)->where('status', 'ditolak')->count();
 
         return view('admin.pengajuan_surat.index', compact('pengajuans', 'magangList', 'total_pending', 'total_disetujui', 'total_ditolak'));
     }
