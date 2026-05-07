@@ -18,16 +18,25 @@ class LoginController extends Controller
             'email' => 'required|string',
             'password' => 'required|string',
         ], [
-            'email.required' => 'Email harus diisi.',
+            'email.required' => 'Email/NIM harus diisi.',
             'password.required' => 'Password harus diisi.',
         ]);
 
-        $creadentials = $request->only('email', 'password');
+        // Mengecek apakah inputan berupa format email atau string biasa (NIM)
+        $loginType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'nim';
+        $credentials = [
+            $loginType => $request->email,
+            'password' => $request->password
+        ];
 
-        if (Auth::attempt($creadentials, $request->filled('remember'))) {
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/home');
+            if (Auth::user()->role === 'admin') {
+                return redirect()->intended('/'); // Rute Dashboard Admin
+            } else {
+                return redirect()->intended('/home'); // Rute Halaman Mahasiswa
+            }
         }
 
         return back()->withErrors([

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PengajuanMagang;
+use App\Models\PengajuanSurat;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\NotifikasiPengajuan;
 
 class PengajuanMagangController extends Controller
@@ -55,10 +57,24 @@ class PengajuanMagangController extends Controller
             'file_pendukung' => $filePaths,
         ]);
 
-        // 4. Kirim Email Notifikasi
-        Mail::to($request->email)->send(new NotifikasiPengajuan($pengajuan->toArray()));
+        // Otomatis buat surat pengantar dari setiap pengajuan magang baru
+        PengajuanSurat::create([
+            'mahasiswa_id' => Auth::id(),
+            'magang_id' => $pengajuan->id,
+            'kode_surat' => null,
+            'jenis_surat' => 'Surat Pengantar Magang',
+            'keperluan' => 'Pengajuan surat pengantar magang untuk ' . $request->nama,
+            'status' => 'pending',
+        ]);
 
-        // 5. Redirect kembali dengan pesan
-        return redirect()->back()->with('success', 'Pengajuan berhasil dikirim! Silakan cek email Anda.');
+        try {
+            // 4. Kirim Email Notifikasi
+            Mail::to($request->email)->send(new NotifikasiPengajuan($pengajuan->toArray()));
+            // 5. Redirect kembali dengan pesan
+            return redirect()->back()->with('success', 'Pengajuan berhasil dikirim! Silakan cek email Anda.');
+        } catch (\Exception $e) {
+            // Jika gagal kirim email, data tetap diajukan
+            return redirect()->back()->with('success', 'Pengajuan berhasil dikirim ke database! Namun notifikasi email gagal terkirim karena sistem email sedang gangguan.');
+        }
     }
 }

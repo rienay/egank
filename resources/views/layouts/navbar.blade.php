@@ -80,6 +80,14 @@
         font-size: 13px;
         font-weight: 600;
         letter-spacing: 0.5px;
+        overflow: hidden;
+    }
+
+    .avatar-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
     }
 
     .chevron-icon {
@@ -150,7 +158,13 @@
     <ul class="nav-links">
         <li><a href="/home" class="{{ request()->is('home') ? 'active' : '' }}">Home</a></li>
         <li><a href="/pedoman" class="{{ request()->is('pedoman*') ? 'active' : '' }}">Pedoman Magang</a></li>
-        <li><a href="/ajukan" class="{{ request()->is('ajukan*') ? 'active' : '' }}">Ajukan Surat</a></li>
+        <li>
+            @auth
+                <a href="{{ route('ajukan.index') }}" class="{{ request()->is('ajukan*') ? 'active' : '' }}">Ajukan Surat</a>
+            @else
+                <a href="{{ route('login.form') }}" class="{{ request()->is('login*') ? 'active' : '' }}">Ajukan Surat</a>
+            @endauth
+        </li>
         <li><a href="/riwayat" class="{{ request()->is('riwayat*') ? 'active' : '' }}">Riwayat Surat</a></li>
     </ul>
 
@@ -158,7 +172,11 @@
         @auth
             <button class="profile-btn">
                 <div class="avatar-placeholder">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    @if(Auth::user()->photo)
+                        <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Foto Profil" class="avatar-image">
+                    @else
+                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    @endif
                 </div>
                 <svg class="chevron-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -169,7 +187,8 @@
                     <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-0.5">Mahasiswa</p>
                     <p class="font-bold text-gray-800 truncate text-sm">{{ Auth::user()->name }}</p>
                 </div>
-                <a href="/profile">Profil Anda</a>
+                <a href="{{ route('profile.show') }}">Profil Anda</a>
+                <a href="{{ route('change-password.show') }}">Reset Password</a>
                 <hr class="border-gray-50 m-0">
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
@@ -179,7 +198,7 @@
                 </form>
             </div>
         @else
-            <a href="{{ route('login') }}" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg transition duration-200" style="text-decoration: none;">
+            <a href="{{ route('login.form') }}" class="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg transition duration-200" style="text-decoration: none;">
                 Login
             </a>
         @endauth

@@ -108,7 +108,13 @@
             <ul class="footer-links">
                 <li><a href="/home" class="{{ request()->is('home') ? 'active' : '' }}">Home</a></li>
                 <li><a href="/pedoman" class="{{ request()->is('pedoman*') ? 'active' : '' }}">Pedoman Magang</a></li>
-                <li><a href="/ajukan" class="{{ request()->is('ajukan*') ? 'active' : '' }}">Ajukan Surat</a></li>
+                <li>
+                    @auth
+                        <a href="{{ route('ajukan.index') }}" class="{{ request()->is('ajukan*') ? 'active' : '' }}">Ajukan Surat</a>
+                    @else
+                        <a href="{{ route('login.form') }}" class="{{ request()->is('login*') ? 'active' : '' }}">Ajukan Surat</a>
+                    @endauth
+                </li>
                 <li><a href="/riwayat" class="{{ request()->is('riwayat*') ? 'active' : '' }}">Riwayat Surat</a></li>
             </ul>
         </div>

@@ -1,0 +1,16 @@
+<?php
+namespace App\Mail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class SuratDisetujui extends Mailable {
+    use Queueable, SerializesModels;
+    public $pengajuan;
+
+    public function __construct($pengajuan) { $this->pengajuan = $pengajuan; }
+
+    public function build() {
+        return $this->subject('Surat Pengajuan Anda Telah Disetujui')->view('emails.surat_disetujui');
+    }
+}

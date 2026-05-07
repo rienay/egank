@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +16,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // 1. Buat Akun Admin Utama
+        User::create([
+            'name'     => 'Administrator',
+            'email'    => 'admin@gmail.com',
+            'password' => Hash::make('password123'),
+            'role'     => 'admin',
+            'nim'      => null,
+            'prodi'    => null,
+            'semester' => null,
+            'angkatan' => null,
         ]);
+
+        // 2. Buat Data Mahasiswa Contoh (Manual)
+        User::create([
+            'name'     => 'Sulis Rahayu',
+            'email'    => 'sulis@example.com',
+            'password' => Hash::make('password123'),
+            'role'     => 'mahasiswa',
+            'nim'      => '220102034',
+            'prodi'    => 'Teknik Informatika',
+            'semester' => 4,
+            'angkatan' => '2022',
+        ]);
+
+        // 3. Buat Data Mahasiswa Dummy Banyak (Opsional untuk testing pagination)
+        $prodiList = ['Teknik Informatika', 'Teknik Mesin', 'Teknik Listrik'];
+        
+        for ($i = 1; $i <= 10; $i++) {
+            User::create([
+                'name'     => 'Mahasiswa Dummy ' . $i,
+                'email'    => 'student' . $i . '@example.com',
+                'password' => Hash::make('password123'),
+                'role'     => 'mahasiswa',
+                'nim'      => '22010' . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'prodi'    => $prodiList[array_rand($prodiList)],
+                'semester' => rand(1, 8),
+                'angkatan' => (string) rand(2020, 2023),
+            ]);
+        }
     }
 }

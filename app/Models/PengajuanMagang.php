@@ -26,4 +26,12 @@ class PengajuanMagang extends Model
     protected $casts = [
         'file_pendukung' => 'array',
     ];
+
+    /**
+     * Relasi satu ke banyak dengan PengajuanSurat
+     */
+    public function pengajuanSurats()
+    {
+        return $this->hasMany(PengajuanSurat::class, 'magang_id');
+    }
 }

@@ -44,12 +44,20 @@
                         </td>
                         
                         <td class="py-4 px-6">
-                            @if($data->status == 'Disetujui')
-                                <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-md font-medium">Disetujui</span>
-                            @elseif($data->status == 'Ditolak')
-                                <span class="bg-red-100 text-red-700 text-xs px-3 py-1 rounded-md font-medium">Ditolak</span>
+                            @php
+                                $lastSurat = $data->pengajuanSurats->sortByDesc('created_at')->first();
+                            @endphp
+
+                            @if($lastSurat)
+                                @if($lastSurat->status == 'disetujui')
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-md font-medium">Disetujui</span>
+                                @elseif($lastSurat->status == 'ditolak')
+                                    <span class="bg-red-100 text-red-700 text-xs px-3 py-1 rounded-md font-medium">Ditolak</span>
+                                @else
+                                    <span class="bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-md font-medium">Menunggu</span>
+                                @endif
                             @else
-                                <span class="bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-md font-medium">Menunggu Validasi</span>
+                                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-md font-medium">Belum Ada Surat</span>
                             @endif
                         </td>
 
@@ -68,34 +76,34 @@
                         </td>
 
                         <td class="py-4 px-6 flex items-center justify-center gap-4">
-                            <button onclick="openModal('modal-detail-{{ $data->id }}')" class="text-blue-600 hover:text-blue-800 transition" title="Detail Pengajuan">
-                                <i class="far fa-eye text-lg"></i>
-                            </button>
-                            
-                            @if($data->status == 'Disetujui')
-                                <a href="#" class="text-green-600 hover:text-green-800 transition" title="Unduh Surat Pengantar">
-                                    <i class="fas fa-download text-lg"></i>
-                                </a>
-                            @else
-                                <span class="text-gray-300 cursor-not-allowed" title="Surat belum disetujui">
-                                    <i class="fas fa-download text-lg"></i>
-                                </span>
-                            @endif
+                                <button onclick="openModal('modal-detail-{{ $data->id }}')" class="text-blue-600 hover:text-blue-800 transition" title="Detail Pengajuan">
+                                    <i class="far fa-eye text-lg"></i>
+                                </button>
 
-                            @if($data->status_magang == 'Belum Konfirmasi' && $data->status == 'Disetujui')
-                                <button onclick="openModal('modal-mulai-{{ $data->id }}')" class="text-orange-500 hover:text-orange-600 transition" title="Mulai Magang">
-                                    <i class="fas fa-play text-lg"></i>
-                                </button>
-                            @elseif($data->status_magang == 'Sedang Magang')
-                                <button onclick="openModal('modal-selesai-{{ $data->id }}')" class="text-yellow-500 hover:text-yellow-600 transition" title="Selesai Magang">
-                                    <i class="fas fa-pause text-lg"></i>
-                                </button>
-                            @elseif($data->status_magang == 'Selesai')
-                                <span class="text-purple-500" title="Magang Selesai">
-                                    <i class="fas fa-check-circle text-lg"></i>
-                                </span>
-                            @endif
-                        </td>
+                                @if(isset($lastSurat) && $lastSurat->status == 'disetujui')
+                                    <a href="{{ route('pengajuan_surat.pdf', $lastSurat->id) }}" class="text-green-600 hover:text-green-800 transition" title="Unduh Surat Pengantar">
+                                        <i class="fas fa-download text-lg"></i>
+                                    </a>
+                                @else
+                                    <span class="text-gray-300 cursor-not-allowed" title="Surat belum disetujui">
+                                        <i class="fas fa-download text-lg"></i>
+                                    </span>
+                                @endif
+
+                                @if($data->status_magang == 'Belum Konfirmasi' && isset($lastSurat) && $lastSurat->status == 'disetujui')
+                                    <button onclick="openModal('modal-mulai-{{ $data->id }}')" class="text-orange-500 hover:text-orange-600 transition" title="Mulai Magang">
+                                        <i class="fas fa-play text-lg"></i>
+                                    </button>
+                                @elseif($data->status_magang == 'Sedang Magang')
+                                    <button onclick="openModal('modal-selesai-{{ $data->id }}')" class="text-yellow-500 hover:text-yellow-600 transition" title="Selesai Magang">
+                                        <i class="fas fa-pause text-lg"></i>
+                                    </button>
+                                @elseif($data->status_magang == 'Selesai')
+                                    <span class="text-purple-500" title="Magang Selesai">
+                                        <i class="fas fa-check-circle text-lg"></i>
+                                    </span>
+                                @endif
+                            </td>
                     </tr>
 
                     <div id="modal-detail-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
@@ -110,10 +118,16 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-500 mb-1">Status Surat</p>
-                                        @if($data->status == 'Disetujui')
-                                            <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium">Disetujui</span>
+                                        @if($lastSurat)
+                                            @if($lastSurat->status == 'disetujui')
+                                                <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium">Disetujui</span>
+                                            @elseif($lastSurat->status == 'ditolak')
+                                                <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded font-medium">Ditolak</span>
+                                            @else
+                                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded font-medium">Menunggu</span>
+                                            @endif
                                         @else
-                                            <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded font-medium">{{ $data->status }}</span>
+                                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">Belum Ada Surat</span>
                                         @endif
                                     </div>
                                     <div class="md:col-span-2">

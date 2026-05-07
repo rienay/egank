@@ -205,9 +205,15 @@
         <p class="text-blue-100 mb-8 max-w-xl mx-auto text-sm md:text-base">
             Segera ajukan surat pengantar magang Anda dan mulai pengalaman berharga di industri!
         </p>
-        <a href="#" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-            Ajukan Surat Pengantar
-        </a>
+        @auth
+            <a href="{{ route('ajukan.index') }}" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                Ajukan Surat Pengantar
+            </a>
+        @else
+            <a href="{{ route('login.form') }}" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+                Login untuk Ajukan Surat
+            </a>
+        @endauth
     </div>
 </section>
 
