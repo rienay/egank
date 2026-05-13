@@ -8,17 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CampusProfile extends Model
 {
     use HasFactory;
-
-    /**
-     * Menghubungkan model ke tabel 'campusprofiles'.
-     * Ini penting karena nama tabel tidak menggunakan standar jamak Laravel (campus_profiles).
-     */
     protected $table = 'campusprofiles';
-
-    /**
-     * Kolom yang dapat diisi secara massal (Mass Assignment).
-     * Sesuai dengan kolom yang ada pada migrasi database kamu.
-     */
 protected $fillable = [
     'kementerian', 'nama_kampus', 'alamat_kampus', 'telepon_kampus', 
     'fax_kampus', 'website', 'email_kampus', 'nama_kontak_person', 

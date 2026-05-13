@@ -61,7 +61,6 @@ class CampusProfileController extends Controller
             'fax_kampus' => 'required',
             'website' => 'required',
             'email_kampus' => 'required|email',
-            // 'kode_surat' dihapus dari sini karena sudah dipindah ke pengajuan_magangs
             'nama_kontak_person' => 'required',
             'telepon_kontak_person' => 'required',
             'jabatan_penandatangan' => 'required',
@@ -72,7 +71,6 @@ class CampusProfileController extends Controller
             'stempel_image' => 'nullable|image|max:2048',
         ]);
 
-        // update logo
         if ($request->hasFile('logo_kampus')) {
             if ($campus_profile->logo_kampus) {
                 Storage::disk('public')->delete($campus_profile->logo_kampus);
@@ -80,7 +78,6 @@ class CampusProfileController extends Controller
             $data['logo_kampus'] = $request->file('logo_kampus')->store('kampus', 'public');
         }
 
-        // update ttd
         if ($request->hasFile('ttd_image')) {
             if ($campus_profile->ttd_image) {
                 Storage::disk('public')->delete($campus_profile->ttd_image);
@@ -88,7 +85,6 @@ class CampusProfileController extends Controller
             $data['ttd_image'] = $request->file('ttd_image')->store('kampus', 'public');
         }
 
-        // update stempel
         if ($request->hasFile('stempel_image')) {
             if ($campus_profile->stempel_image) {
                 Storage::disk('public')->delete($campus_profile->stempel_image);

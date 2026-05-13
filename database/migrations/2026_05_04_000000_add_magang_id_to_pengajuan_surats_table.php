@@ -9,7 +9,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pengajuan_surats', function (Blueprint $table) {
-            // Tambah kolom magang_id setelah mahasiswa_id
             $table->foreignId('magang_id')
                   ->nullable()
                   ->after('mahasiswa_id')

@@ -2,10 +2,8 @@
     @csrf
 
     @if(request('magang_id'))
-        <!-- Tangkap magang_id dari parameter URL tombol "Buat Surat" -->
         <input type="hidden" name="magang_id" value="{{ request('magang_id') }}">
     @else
-        <!-- Jika dibuat manual dari tombol tambah, wajib pilih data magang -->
         <div class="alert alert-warning mb-4 border-0" style="border-radius: 12px; background-color: #fffaf0;">
             <label class="form-label fw-semibold small text-dark">Pilih Data Pengajuan Magang <span class="text-danger">*</span></label>
             <select name="magang_id" class="form-select" required>
@@ -17,7 +15,6 @@
         </div>
     @endif
 
-    <!-- Alert Info -->
     <div class="alert alert-sm p-3 mb-4 border-0" style="background-color: #fff5f0; border-radius: 12px;">
         <div class="d-flex align-items-center">
             <i class="bi bi-person-plus-fill me-2" style="color: #ff6600;"></i>
@@ -26,7 +23,6 @@
         </div>
     </div>
 
-    <!-- DATA MAHASISWA -->
     <div class="row g-3 mb-4">
         <div class="col-12"><h6 class="fw-bold text-primary mb-2">I. Data Mahasiswa</h6></div>
         
@@ -56,7 +52,6 @@
         </div>
     </div>
 
-    <!-- DATA PERUSAHAAN -->
     <div class="row g-3 mb-4">
         <div class="col-12"><h6 class="fw-bold text-primary mb-2">II. Data Perusahaan & Magang</h6></div>
         
@@ -81,7 +76,6 @@
         </div>
     </div>
 
-    <!-- JENIS SURAT & KEPERLUAN -->
     <div class="row g-3 mb-4">
         <div class="col-12"><h6 class="fw-bold text-primary mb-2">III. Jenis & Keperluan Surat</h6></div>
         
@@ -100,14 +94,12 @@
             <input type="text" name="keperluan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" placeholder="Contoh: Pengajuan Magang Industri" required>
         </div>
 
-        <!-- Optional: Upload file oleh admin jika ada -->
         <div class="col-md-12">
             <label class="form-label fw-semibold small">Upload File Pendukung (Opsional)</label>
             <input type="file" name="file_pendukung[]" multiple class="form-control border-0 px-3" style="background-color: #f3f4f6; border-radius: 8px;">
         </div>
     </div>
 
-    <!-- Footer Buttons -->
     <div class="row g-3 pt-3 border-top mt-4">
         <div class="col-6">
             <button type="button" class="btn btn-outline-secondary w-100 py-2 fw-semibold" data-dismiss="modal" style="border-radius: 10px;">Batal</button>

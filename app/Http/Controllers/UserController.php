@@ -80,11 +80,9 @@ class UserController extends Controller
         ]);
 
         try {
-            // Kirim email notifikasi
             Mail::to($user->email)->send(new UserAccountCreated($user, $defaultPassword));
             return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil ditambahkan dan email informasi akun telah dikirim!');
         } catch (\Exception $e) {
-            // Jika gagal kirim email, data tetap tersimpan tapi tampilkan pesan peringatan
             return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil ditambahkan! Namun sistem gagal mengirim email notifikasi. Pastikan konfigurasi SMTP di .env sudah benar.');
         }
     }
@@ -167,14 +165,11 @@ class UserController extends Controller
             'nama_dosen_pembimbing' => $request->nama_dosen_pembimbing,
         ];
 
-        // Handle photo upload
         if ($request->hasFile('photo')) {
-            // Delete old photo if exists
             if ($user->photo && Storage::disk('public')->exists($user->photo)) {
                 Storage::disk('public')->delete($user->photo);
             }
 
-            // Store new photo
             $photoPath = $request->file('photo')->store('profiles', 'public');
             $data['photo'] = $photoPath;
         }
@@ -204,12 +199,10 @@ class UserController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Cek password saat ini
         if (!Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->with('error', 'Password saat ini salah!');
         }
 
-        // Update password
         $user->update([
             'password' => Hash::make($request->new_password),
         ]);

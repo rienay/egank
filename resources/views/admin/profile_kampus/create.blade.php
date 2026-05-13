@@ -5,7 +5,6 @@
             <form action="{{ route('campus-profile.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <!-- HEADER -->
                 <div class="modal-header border-0 pb-0">
                     <div>
                         <h5 class="font-weight-bold mb-1">Tambah Profil Kampus</h5>
@@ -14,10 +13,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- BODY -->
                 <div class="modal-body pt-3">
 
-                    <!-- INFORMASI -->
                     <h6 class="font-weight-bold mb-3" style="color:#ff6b00;">Informasi Kampus</h6>
 
                     <div class="form-row">
@@ -59,7 +56,6 @@
                         <input type="email" name="email_kampus" class="form-control shadow-sm" required>
                     </div>
 
-                    <!-- LOGO -->
                     <div class="form-group">
                         <label class="small text-muted">Logo Kampus</label>
                         <input type="file" name="logo_kampus" class="form-control shadow-sm">
@@ -67,7 +63,6 @@
 
                     <hr>
 
-                    <!-- KONTAK -->
                     <h6 class="font-weight-bold mb-3" style="color:#ff6b00;">Kontak</h6>
 
                     <div class="form-row">
@@ -83,8 +78,6 @@
                     </div>
 
                     <hr>
-
-                    <!-- PENANDATANGAN -->
                     <h6 class="font-weight-bold mb-3" style="color:#ff6b00;">Penandatangan</h6>
 
                     <div class="form-row">
@@ -118,7 +111,6 @@
 
                 </div>
 
-                <!-- FOOTER -->
                 <div class="modal-footer border-0">
                     <button type="submit"
                         class="btn w-100 text-white font-weight-bold"

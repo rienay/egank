@@ -4,7 +4,7 @@
 
 <header class="relative h-[300px] md:h-[420px] flex items-center justify-center text-center bg-cover bg-center"
     style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/img/backround.png');">
-      
+
     <div class="px-4 relative z-10">
         <h1 class="text-3xl md:text-5xl font-extrabold mb-3 text-white tracking-wide leading-tight">
             Program Magang Industri
@@ -27,14 +27,14 @@
             teori yang dipelajari di kampus dengan praktik langsung di lapangan.
         </p>
         <p>
-            Melalui program magang, mahasiswa akan mendapatkan kesempatan untuk 
-            mengembangkan keterampilan teknis dan soft skills, serta membangun jaringan 
+            Melalui program magang, mahasiswa akan mendapatkan kesempatan untuk
+            mengembangkan keterampilan teknis dan soft skills, serta membangun jaringan
             profesional yang akan berguna untuk karir masa depan.
         </p>
         <p>
             Program magang dilaksanakan pada semester 6 dengan durasi minimal 3 bulan
             atau setara dengan 480 jam kerja efektif. Mahasiswa akan dibimbing oleh
-            dosen pembimbing dari kampus dan mentor dari industri untuk memastikan 
+            dosen pembimbing dari kampus dan mentor dari industri untuk memastikan
             proses pembelajaran berjalan optimal.
         </p>
     </div>
@@ -82,22 +82,22 @@
         <div class="w-full md:w-2/3 bg-blue-50 p-6 md:p-8 rounded-2xl border-l-8 border-blue-500">
             <div class="space-y-4 italic text-gray-700 text-sm md:text-base leading-relaxed">
                 <p>
-                    "Program magang industri merupakan bagian integral dari 
-                    kurikulum kami yang dirancang untuk mempersiapkan mahasiswa 
-                    menghadapi tantangan dunia kerja. Kami berkomitmen untuk 
+                    "Program magang industri merupakan bagian integral dari
+                    kurikulum kami yang dirancang untuk mempersiapkan mahasiswa
+                    menghadapi tantangan dunia kerja. Kami berkomitmen untuk
                     memastikan setiap mahasiswa mendapatkan pengalaman magang yang berkualitas dan bermakna.
                 </p>
                 <p>
                     Melalui kerjasama dengan berbagai industri terkemuka, kami
                     menyediakan kesempatan bagi mahasiswa untuk belajar langsung
                     dari para profesional berpengalaman. Program ini tidak hanya
-                    fokus pada pengembangan keterampilan teknis, tetapi juga 
+                    fokus pada pengembangan keterampilan teknis, tetapi juga
                     membangun karakter profesional, etika kerja, dan kemampuan beradaptasi.
                 </p>
                 <p>
-                    Kami mendorong mahasiswa untuk aktif berkomunikasi dengan koordinator 
-                    magang terkait kendala atau pertanyaan seputar program magang. Tim kami 
-                    siap membantu memastikan pengalaman magang Anda berjalan dengan lancar dan 
+                    Kami mendorong mahasiswa untuk aktif berkomunikasi dengan koordinator
+                    magang terkait kendala atau pertanyaan seputar program magang. Tim kami
+                    siap membantu memastikan pengalaman magang Anda berjalan dengan lancar dan
                     memberikan manfaat maksimal untuk pengembangan karir Anda."
                 </p>
             </div>
@@ -159,7 +159,7 @@
 
 <section class="max-w-6xl mx-auto py-8 px-6 mb-12">
     <h2 class="text-2xl font-bold mb-8">Galeri Kegiatan Magang Mahasiswa</h2>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         <div class="bg-white rounded-2xl overflow-hidden shadow-sm group border border-gray-100">
@@ -206,13 +206,13 @@
             Segera ajukan surat pengantar magang Anda dan mulai pengalaman berharga di industri!
         </p>
         @auth
-            <a href="{{ route('ajukan.index') }}" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                Ajukan Surat Pengantar
-            </a>
+        <a href="{{ route('ajukan.index') }}" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+            Ajukan Surat Pengantar
+        </a>
         @else
-            <a href="{{ route('login.form') }}" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
-                Login untuk Ajukan Surat
-            </a>
+        <a href="{{ route('login.form') }}" class="inline-block bg-white text-blue-700 px-8 md:px-12 py-3 md:py-4 rounded-2xl font-bold hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
+            Login untuk Ajukan Surat
+        </a>
         @endauth
     </div>
 </section>

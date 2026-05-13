@@ -15,7 +15,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        // 1. Validasi Input
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -26,14 +25,11 @@ class RegisterController extends Controller
             'password.min' => 'Password minimal 8 karakter.'
         ]);
 
-        // 2. Simpan ke Database (Password otomatis di-hash)
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        // 3. Langsung lempar ke halaman login
         return redirect()->route('login.form')->with('success', 'Akun berhasil dibuat! Silakan login.');
     }
 }

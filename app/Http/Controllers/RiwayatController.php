@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class RiwayatController extends Controller
 {
-    // Menampilkan halaman riwayat untuk user login
     public function index()
     {
         $user = Auth::user();
@@ -28,15 +27,10 @@ class RiwayatController extends Controller
         return view('riwayat', compact('riwayat'));
     }
 
-    // Menampilkan halaman riwayat untuk admin
     public function adminIndex(Request $request)
     {
-        // Ambil data user dengan role mahasiswa untuk dropdown filter
         $users = User::where('role', 'mahasiswa')->get();
-
         $query = PengajuanMagang::with('pengajuanSurats')->latest();
-
-        // Logika filter berdasarkan user yang dipilih
         if ($request->filled('user_id')) {
             $selectedUser = User::find($request->user_id);
             if ($selectedUser) {
@@ -54,12 +48,9 @@ class RiwayatController extends Controller
         return view('admin.riwayat.index', compact('riwayat', 'users'));
     }
 
-    // Mengubah status magang (Mulai / Selesai)
     public function updateStatusMagang(Request $request, $id)
     {
         $pengajuan = PengajuanMagang::findOrFail($id);
-
-        // Update status sesuai yang dikirim dari tombol konfirmasi
         $pengajuan->update([
             'status_magang' => $request->status_magang,
         ]);

@@ -17,7 +17,7 @@ return new class extends Migration
         $table->string('angkatan');
         $table->string('perusahaan');
         $table->text('alamat');
-        $table->string('kode_surat')->nullable(); // Disi saat Admin memproses surat
+        $table->string('kode_surat')->nullable(); 
         $table->date('tgl_mulai');
         $table->date('tgl_selesai');
         $table->json('file_pendukung');

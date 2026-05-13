@@ -19,8 +19,6 @@ class PengajuanSuratController extends Controller
     public function index()
     {
         $user = Auth::user();
-
-        // Basis query: admin melihat semua, mahasiswa hanya data miliknya.
         $query = PengajuanSurat::with(['mahasiswa', 'magang']);
         $statsQuery = PengajuanSurat::query();
 
@@ -29,13 +27,11 @@ class PengajuanSuratController extends Controller
             $statsQuery->where('mahasiswa_id', Auth::id());
         }
 
-        // Filter status
         $status = request('status');
         if (in_array($status, ['pending', 'disetujui', 'ditolak'], true)) {
             $query->where('status', $status);
         }
 
-        // Pencarian berdasarkan data surat dan data magang terkait
         $search = trim((string) request('search', ''));
         if ($search !== '') {
             $query->where(function ($q) use ($search) {
@@ -51,13 +47,9 @@ class PengajuanSuratController extends Controller
         }
 
         $pengajuans = $query->latest()->paginate(10)->withQueryString();
-        
-        // Ambil data pengajuan magang untuk modal create
         $magangList = PengajuanMagang::where('status', 'disetujui')
                         ->whereDoesntHave('pengajuanSurats')
                         ->get();
-        
-        // Hitung statistik untuk kartu ringkasan sesuai cakupan role.
         $total_pending = (clone $statsQuery)->where('status', 'pending')->count();
         $total_disetujui = (clone $statsQuery)->where('status', 'disetujui')->count();
         $total_ditolak = (clone $statsQuery)->where('status', 'ditolak')->count();
@@ -67,7 +59,6 @@ class PengajuanSuratController extends Controller
 
     public function create()
     {
-        // Ambil data pengajuan magang yang belum memiliki surat
         $magangList = PengajuanMagang::where('status', 'disetujui')
                         ->whereDoesntHave('pengajuanSurats')
                         ->get();
@@ -83,16 +74,9 @@ class PengajuanSuratController extends Controller
             'keperluan'   => 'required|string',
         ]);
 
-        // Ambil data magang
         $magang = PengajuanMagang::findOrFail($request->magang_id);
-
-        // Generate nomor surat
         $nomorSurat = $this->generateNomorSurat();
-
-        // Generate QR Code
         $qrPath = $this->generateQRCode();
-
-        // Buat pengajuan surat dengan status langsung disetujui
         $pengajuan = PengajuanSurat::create([
             'mahasiswa_id' => Auth::id(),
             'magang_id'    => $magang->id,
@@ -122,7 +106,6 @@ class PengajuanSuratController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Support updating jenis/keperluan as well as status via AJAX or normal form
         $request->validate([
             'jenis_surat' => 'sometimes|required|string',
             'keperluan'   => 'sometimes|required|string',
@@ -142,11 +125,31 @@ class PengajuanSuratController extends Controller
             $updateData['status'] = $request->status;
         }
 
+        if ($request->filled('status')) {
+            if ($request->status === 'disetujui') {
+                if (empty($pengajuan->nomor_surat)) {
+                    $updateData['nomor_surat'] = $this->generateNomorSurat();
+                }
+
+                if (empty($pengajuan->qr_code)) {
+                    $updateData['qr_code'] = $this->generateQRCode($pengajuan->id);
+                }
+
+                $updateData['alasan_penolakan'] = null;
+            } else {
+                if ($pengajuan->qr_code && Storage::disk('public')->exists($pengajuan->qr_code)) {
+                    Storage::disk('public')->delete($pengajuan->qr_code);
+                }
+
+                $updateData['nomor_surat'] = null;
+                $updateData['qr_code'] = null;
+            }
+        }
+
         if (!empty($updateData)) {
             $pengajuan->update($updateData);
         }
 
-        // If request expects JSON (AJAX status change), return JSON response
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json(['success' => true, 'status' => $pengajuan->status]);
         }
@@ -158,7 +161,6 @@ class PengajuanSuratController extends Controller
     {
         $pengajuan = PengajuanSurat::findOrFail($id);
 
-        // Hapus QR Code jika ada
         if ($pengajuan->qr_code && Storage::disk('public')->exists($pengajuan->qr_code)) {
             Storage::disk('public')->delete($pengajuan->qr_code);
         }
@@ -183,7 +185,6 @@ class PengajuanSuratController extends Controller
                 'alasan_penolakan' => null,
             ]);
 
-            // Kirim Email Notifikasi
             if ($pengajuan->mahasiswa) {
                 Mail::to($pengajuan->mahasiswa->email)->send(new SuratDisetujui($pengajuan));
             }
@@ -197,7 +198,6 @@ class PengajuanSuratController extends Controller
         $request->validate(['alasan_penolakan' => 'required|string']);
         $pengajuan = PengajuanSurat::findOrFail($id);
 
-        // Hapus QR Code lama jika ada
         if ($pengajuan->qr_code && Storage::disk('public')->exists($pengajuan->qr_code)) {
             Storage::disk('public')->delete($pengajuan->qr_code);
         }
@@ -251,11 +251,6 @@ class PengajuanSuratController extends Controller
         return view('validasi-surat', compact('pengajuan'));
     }
 
-    // ========== HELPER FUNCTIONS ==========
-
-    /**
-     * Generate nomor surat otomatis dengan format: 0001/PL.43/PP.02.01/{tahun}
-     */
     private function generateNomorSurat()
     {
         $tahun = Carbon::now()->year;
@@ -271,15 +266,9 @@ class PengajuanSuratController extends Controller
         return "{$formattedUrut}/PL.43/PP.02.01/{$tahun}";
     }
 
-    /**
-     * Generate QR Code untuk validasi surat
-     * QR Code berisi: /validasi-surat/{id}
-     */
     private function generateQRCode($id = null)
     {
-        // Jika belum ada ID, generate sementara (akan update setelah insert)
         if (!$id) {
-            // Generate dummy QR untuk mendapatkan path
             $id = 'temp';
         }
 

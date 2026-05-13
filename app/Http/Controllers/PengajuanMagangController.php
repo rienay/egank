@@ -19,7 +19,6 @@ class PengajuanMagangController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validasi Input (Tambah email)
         $validated = $request->validate([
             'nim' => 'required|string|max:20',
             'nama' => 'required|string|max:255',
@@ -34,7 +33,6 @@ class PengajuanMagangController extends Controller
             'file_pendukung.*' => 'mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        // 2. Proses Upload File
         $filePaths = [];
         if ($request->hasFile('file_pendukung')) {
             foreach ($request->file('file_pendukung') as $file) {
@@ -43,7 +41,6 @@ class PengajuanMagangController extends Controller
             }
         }
 
-        // 3. Simpan ke Database
         $pengajuan = PengajuanMagang::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
@@ -57,7 +54,6 @@ class PengajuanMagangController extends Controller
             'file_pendukung' => $filePaths,
         ]);
 
-        // Otomatis buat surat pengantar dari setiap pengajuan magang baru
         PengajuanSurat::create([
             'mahasiswa_id' => Auth::id(),
             'magang_id' => $pengajuan->id,
@@ -68,12 +64,9 @@ class PengajuanMagangController extends Controller
         ]);
 
         try {
-            // 4. Kirim Email Notifikasi
             Mail::to($request->email)->send(new NotifikasiPengajuan($pengajuan->toArray()));
-            // 5. Redirect kembali dengan pesan
             return redirect()->back()->with('success', 'Pengajuan berhasil dikirim! Silakan cek email Anda.');
         } catch (\Exception $e) {
-            // Jika gagal kirim email, data tetap diajukan
             return redirect()->back()->with('success', 'Pengajuan berhasil dikirim ke database! Namun notifikasi email gagal terkirim karena sistem email sedang gangguan.');
         }
     }

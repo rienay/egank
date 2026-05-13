@@ -9,7 +9,6 @@
         </div>
     </div>
 
-    <!-- Filter Card -->
     <div class="card border-0 shadow-sm rounded-lg mb-4" style="border-radius: 15px;">
         <div class="card-body p-4">
             <form action="{{ route('export.index') }}" method="GET" class="row align-items-end">
@@ -35,13 +34,12 @@
         </div>
     </div>
 
-    <!-- Data Table Card -->
     <div class="card border-0 shadow-sm" style="border-radius: 15px;">
         <div class="card-body">
             @if(request('start_date') && request('end_date'))
-                <div class="alert border-0 shadow-sm mb-4" style="border-radius: 10px; background-color: #fff5f0; color: #ff6600;">
-                    <i class="fas fa-info-circle mr-2"></i> Menampilkan data pengajuan magang dari tanggal <b>{{ \Carbon\Carbon::parse(request('start_date'))->format('d M Y') }}</b> sampai <b>{{ \Carbon\Carbon::parse(request('end_date'))->format('d M Y') }}</b>.
-                </div>
+            <div class="alert border-0 shadow-sm mb-4" style="border-radius: 10px; background-color: #fff5f0; color: #ff6600;">
+                <i class="fas fa-info-circle mr-2"></i> Menampilkan data pengajuan magang dari tanggal <b>{{ \Carbon\Carbon::parse(request('start_date'))->format('d M Y') }}</b> sampai <b>{{ \Carbon\Carbon::parse(request('end_date'))->format('d M Y') }}</b>.
+            </div>
             @endif
 
             <div class="table-responsive mt-2">
@@ -75,23 +73,23 @@
                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} s/d {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}</td>
                             <td>
                                 @php
-                                    $statusMagang = $data->status_magang;
-                                    $statusLabel = 'Belum Validasi';
-                                    $statusClass = 'badge-secondary';
+                                $statusMagang = $data->status_magang;
+                                $statusLabel = 'Belum Validasi';
+                                $statusClass = 'badge-secondary';
 
-                                    if ($statusMagang === 'Sedang Magang') {
-                                        $statusLabel = 'Sedang Magang';
-                                        $statusClass = 'badge-primary';
-                                    } elseif ($statusMagang === 'Selesai') {
-                                        $statusLabel = 'Selesai Magang';
-                                        $statusClass = 'badge-dark';
-                                    } elseif ($data->status === 'disetujui') {
-                                        $statusLabel = 'Sedang Magang';
-                                        $statusClass = 'badge-primary';
-                                    } elseif ($data->status === 'Menunggu Validasi' || $statusMagang === 'Belum Konfirmasi') {
-                                        $statusLabel = 'Belum Validasi';
-                                        $statusClass = 'badge-secondary';
-                                    }
+                                if ($statusMagang === 'Sedang Magang') {
+                                $statusLabel = 'Sedang Magang';
+                                $statusClass = 'badge-primary';
+                                } elseif ($statusMagang === 'Selesai') {
+                                $statusLabel = 'Selesai Magang';
+                                $statusClass = 'badge-dark';
+                                } elseif ($data->status === 'disetujui') {
+                                $statusLabel = 'Sedang Magang';
+                                $statusClass = 'badge-primary';
+                                } elseif ($data->status === 'Menunggu Validasi' || $statusMagang === 'Belum Konfirmasi') {
+                                $statusLabel = 'Belum Validasi';
+                                $statusClass = 'badge-secondary';
+                                }
                                 @endphp
                                 <span class="badge {{ $statusClass }} px-3 py-2">{{ $statusLabel }}</span>
                             </td>

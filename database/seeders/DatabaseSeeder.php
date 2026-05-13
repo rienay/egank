@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Buat Akun Admin Utama
+        // 1. admeen
         User::create([
             'name'     => 'Administrator',
             'email'    => 'admin@gmail.com',
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'angkatan' => null,
         ]);
 
-        // 2. Buat Data Mahasiswa Contoh (Manual)
+        // 2. mahasigma
         User::create([
             'name'     => 'Sulis Rahayu',
             'email'    => 'sulis@example.com',
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             'angkatan' => '2022',
         ]);
 
-        // 3. Buat Data Mahasiswa Dummy Banyak (Opsional untuk testing pagination)
+        // 3. dammy mahasiswa
         $prodiList = ['Teknik Informatika', 'Teknik Mesin', 'Teknik Listrik'];
         
         for ($i = 1; $i <= 10; $i++) {

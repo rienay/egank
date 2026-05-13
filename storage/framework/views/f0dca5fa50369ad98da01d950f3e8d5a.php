@@ -2,7 +2,6 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid px-4 py-4">
-    <!-- Page Title & Breadcrumb -->
     <div class="row mb-4 align-items-center">
         <div class="col">
             <h2 class="fw-bold text-dark mb-1">Surat Pengantar Magang</h2>
@@ -15,7 +14,6 @@
         </div>
     </div>
 
-    <!-- Statistik Cards -->
     <div class="row g-3 mb-4">
         <?php
             // Data statistik dinamis
@@ -28,14 +26,19 @@
         ?>
 
         <?php $__currentLoopData = $stats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
+            // Trik agar Linter CSS VS Code tidak mendeteksi error pada Blade syntax
+            $cardStyle = "background-color: {$stat['bg']}; border-bottom: 3px solid {$stat['color']} !important;";
+            $textStyle = "color: {$stat['color']};";
+        ?>
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm h-100 stat-card" style="background-color: <?php echo e($stat['bg']); ?>; border-bottom: 3px solid <?php echo e($stat['color']); ?> !important;">
+            <div class="card border-0 shadow-sm h-100 stat-card" style="<?php echo e($cardStyle); ?>">
                 <div class="card-body p-4 d-flex justify-content-between align-items-center">
                     <div>
-                        <p class="fw-semibold small mb-1" style="color: <?php echo e($stat['color']); ?>"><?php echo e($stat['label']); ?></p>
+                        <p class="fw-semibold small mb-1" style="<?php echo e($textStyle); ?>"><?php echo e($stat['label']); ?></p>
                         <h3 class="fw-bold mb-0 text-dark"><?php echo e($stat['value']); ?></h3>
                     </div>
-                    <div class="icon-shape rounded-circle bg-white shadow-sm d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; color: <?php echo e($stat['color']); ?>">
+                    <div class="icon-shape rounded-circle bg-white shadow-sm d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; <?php echo e($textStyle); ?>">
                         <i class="bi <?php echo e($stat['icon']); ?> fs-4"></i>
                     </div>
                 </div>
@@ -44,10 +47,8 @@
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
 
-    <!-- Table Section -->
     <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 12px;">
         <div class="card-header bg-white py-3 border-0">
-            <!-- FORM PENCARIAN & FILTER -->
             <form action="<?php echo e(route('pengajuan_surat.index')); ?>" method="GET">
                 <div class="row g-3 align-items-center">
                     <div class="col-md-8">
@@ -143,7 +144,6 @@
                 </table>
             </div>
             
-            <!-- Pagination -->
             <div class="px-4 py-3 border-top bg-light-subtle">
                 <div class="row align-items-center">
                     <div class="col-sm-6 text-center text-sm-start mb-2 mb-sm-0 text-muted small">
@@ -184,22 +184,27 @@
 </style>
 
 <script>
-    const csrfToken = '<?php echo e(csrf_token()); ?>';
+    // Trik agar Linter JS tidak kebingungan membaca tag Blade
+    const csrfToken = "<?php echo e(csrf_token()); ?>";
+    const updateUrl = "<?php echo e(url('admin/pengajuan_surat')); ?>";
+    
     async function updateStatus(id, status) {
         if (!confirm(`Ubah status pengajuan menjadi "${status.toUpperCase()}"?`)) {
             location.reload();
             return;
-        };
+        }
 
         try {
-            const res = await fetch(`<?php echo e(url('admin/pengajuan_surat')); ?>/${id}`, {
+            // Menggabungkan string secara standar agar tidak error di VS Code
+            const res = await fetch(updateUrl + '/' + id, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ status })
+                body: JSON.stringify({ status: status })
             });
 
             const data = await res.json();

@@ -3,22 +3,17 @@
 @section('content')
 <div class="min-h-screen bg-gray-100 py-6">
     <div class="max-w-4xl mx-auto px-4">
-        <!-- Back Button -->
         <div class="mb-4">
             <a href="{{ request()->route()->getName() === 'profile.edit' ? route('profile.show') : route('home') }}" class="inline-flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
                 <i class="fas fa-arrow-left mr-2"></i>{{ request()->route()->getName() === 'profile.edit' ? 'Kembali ke Profil' : 'Kembali ke Home' }}
             </a>
         </div>
 
-        <!-- Profile Header Card -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
-            <!-- Gradient Background -->
             <div class="h-32 bg-gradient-to-r from-blue-500 to-orange-500"></div>
-            
-            <!-- Profile Info Section -->
             <div class="px-6 pb-6">
                 <div class="flex flex-col items-center -mt-20 relative z-10 mb-6">
-                    <!-- Avatar Circle -->
+ 
                     @if(request()->route()->getName() === 'profile.edit')
                         <div class="relative group">
                             @if(auth()->user()->photo)
@@ -30,8 +25,7 @@
                                     </span>
                                 </div>
                             @endif
-                            
-                                    <!-- Upload Overlay (opens file dialog) -->
+
                                     <label for="photoInput" class="absolute inset-0 rounded-full bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer">
                                         <div class="text-center">
                                             <i class="fas fa-camera text-white text-2xl mb-1 block"></i>
@@ -51,7 +45,6 @@
                         </div>
                     @endif
 
-                    <!-- Name and NIM -->
                     <h1 class="text-2xl font-bold text-gray-800 text-center mt-4">{{ auth()->user()->name }}</h1>
                     <p class="text-gray-600 text-sm">{{ auth()->user()->nim }}</p>
                 </div>
@@ -64,7 +57,6 @@
                     </div>
                 @endif
 
-                <!-- Success Message -->
                 @if($message = session('success'))
                     <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
                         <i class="fas fa-check-circle mr-2"></i>{{ $message }}
@@ -73,7 +65,6 @@
             </div>
         </div>
 
-        <!-- Profile Form Card -->
         <div class="bg-white rounded-lg shadow-lg p-8">
             @if(request()->route()->getName() === 'profile.edit')
                 <form id="profileForm" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
@@ -81,25 +72,21 @@
                     <input type="file" id="photoInput" name="photo" accept="image/*" class="hidden" onchange="previewPhoto(this)">
             @endif
 
-            <!-- Data Akademik Section -->
             <div>
                 <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
                     <i class="fas fa-graduation-cap text-blue-500 mr-2"></i>Data Akademik
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- NIM (Read-only) -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Induk Mahasiswa (NIM)</label>
                         <input type="text" readonly value="{{ auth()->user()->nim }}" class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600">
                     </div>
 
-                    <!-- Program Studi (Read-only) -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Program Studi</label>
                         <input type="text" readonly value="{{ auth()->user()->prodi }}" class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600">
                     </div>
 
-                    <!-- Nama Lengkap -->
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -110,13 +97,11 @@
                         @endif
                     </div>
 
-                    <!-- Angkatan (Read-only) -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Angkatan</label>
                         <input type="text" readonly value="{{ auth()->user()->angkatan }}" class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600">
                     </div>
 
-                    <!-- Semester (Read-only) -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Semester</label>
                         <input type="text" readonly value="{{ auth()->user()->semester ?? '-' }}" class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-600">
@@ -124,13 +109,11 @@
                 </div>
             </div>
 
-            <!-- Informasi Kontak Section -->
             <div>
                 <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
                     <i class="fas fa-phone text-blue-500 mr-2"></i>Informasi Kontak
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Email -->
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -141,7 +124,6 @@
                         @endif
                     </div>
 
-                    <!-- Phone -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -154,13 +136,11 @@
                 </div>
             </div>
 
-            <!-- Data Pribadi Section -->
             <div>
                 <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
                     <i class="fas fa-user text-blue-500 mr-2"></i>Data Pribadi
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Tempat Lahir -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Tempat Lahir</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -171,7 +151,6 @@
                         @endif
                     </div>
 
-                    <!-- Tanggal Lahir -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Lahir</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -184,13 +163,11 @@
                 </div>
             </div>
 
-            <!-- Alamat Lengkap Section -->
             <div>
                 <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
                     <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>Alamat Lengkap
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Jalan -->
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Jalan</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -201,7 +178,6 @@
                         @endif
                     </div>
 
-                    <!-- RT/RW -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">RT/RW</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -212,7 +188,6 @@
                         @endif
                     </div>
 
-                    <!-- Kelurahan/Desa -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Kelurahan/Desa</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -223,7 +198,6 @@
                         @endif
                     </div>
 
-                    <!-- Kecamatan -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -234,7 +208,6 @@
                         @endif
                     </div>
 
-                    <!-- Provinsi -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -247,13 +220,11 @@
                 </div>
             </div>
 
-            <!-- Pembimbing Section -->
             <div>
                 <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">
                     <i class="fas fa-chalkboard-user text-blue-500 mr-2"></i>Pembimbing
                 </h2>
                 <div class="grid grid-cols-1 gap-6">
-                    <!-- Dosen Pembimbing -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nama Dosen Pembimbing</label>
                         @if(request()->route()->getName() === 'profile.edit')
@@ -286,14 +257,14 @@
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                // Update the avatar image
+
                 const avatarDiv = input.closest('.relative, .w-32');
                 if (avatarDiv) {
                     const img = avatarDiv.querySelector('img');
                     if (img) {
                         img.src = e.target.result;
                     } else {
-                        // If no image exists, we'll update on form submit
+                        
                     }
                 }
             };

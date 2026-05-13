@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container-fluid px-4 py-4">
-    <!-- Page Title -->
     <div class="mb-4">
         <h2 class="fw-bold text-dark mb-1">Edit Pengajuan Surat</h2>
         <p class="text-muted small">Perbarui informasi lengkap mahasiswa, perusahaan, dan detail surat</p>
@@ -20,50 +19,45 @@
         @method('PUT')
 
         <div class="row g-4">
-            <!-- Kolom Kiri: Form Input -->
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-4">
-                        
-                        <!-- I. DATA MAHASISWA -->
                         <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-person me-2"></i>Data Mahasiswa</h6>
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold small text-dark">NIM <span class="text-danger">*</span></label>
-                                <input type="text" name="nim" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('nim', $pengajuan->magang?->nim) }}" required>
+                                <input type="text" name="nim" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('nim', $pengajuan->magang?->nim) }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold small text-dark">Nama Lengkap <span class="text-danger">*</span></label>
-                                <input type="text" name="nama" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('nama', $pengajuan->magang?->nama) }}" required>
+                                <input type="text" name="nama" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('nama', $pengajuan->magang?->nama) }}" required>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold small text-dark">Email Mahasiswa <span class="text-danger">*</span></label>
-                                <input type="email" name="email" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('email', $pengajuan->magang?->email) }}" required>
+                                <input type="email" name="email" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('email', $pengajuan->magang?->email) }}" required>
                             </div>
                             <div class="col-md-8">
                                 <label class="form-label fw-semibold small text-dark">Program Studi <span class="text-danger">*</span></label>
-                                <input type="text" name="prodi" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('prodi', $pengajuan->magang?->prodi) }}" required>
+                                <input type="text" name="prodi" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('prodi', $pengajuan->magang?->prodi) }}" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-semibold small text-dark">Angkatan <span class="text-danger">*</span></label>
-                                <input type="text" name="angkatan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('angkatan', $pengajuan->magang?->angkatan) }}" required>
+                                <input type="text" name="angkatan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('angkatan', $pengajuan->magang?->angkatan) }}" required>
                             </div>
                         </div>
 
                         <hr class="my-4 opacity-50">
-
-                        <!-- II. DATA PERUSAHAAN -->
                         <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-building me-2"></i>Data Perusahaan</h6>
                         <div class="row g-3 mb-4">
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold small text-dark">Nama Perusahaan <span class="text-danger">*</span></label>
-                                <input type="text" name="perusahaan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('perusahaan', $pengajuan->magang?->perusahaan) }}" required>
+                                <input type="text" name="perusahaan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('perusahaan', $pengajuan->magang?->perusahaan) }}" required>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold small text-dark">Alamat Perusahaan <span class="text-danger">*</span></label>
@@ -71,19 +65,17 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold small text-dark">Tanggal Mulai <span class="text-danger">*</span></label>
-                                <input type="date" name="tgl_mulai" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('tgl_mulai', $pengajuan->magang?->tgl_mulai) }}" required>
+                                <input type="date" name="tgl_mulai" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('tgl_mulai', $pengajuan->magang?->tgl_mulai) }}" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold small text-dark">Tanggal Selesai <span class="text-danger">*</span></label>
-                                <input type="date" name="tgl_selesai" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('tgl_selesai', $pengajuan->magang?->tgl_selesai) }}" required>
+                                <input type="date" name="tgl_selesai" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('tgl_selesai', $pengajuan->magang?->tgl_selesai) }}" required>
                             </div>
                         </div>
 
                         <hr class="my-4 opacity-50">
-
-                        <!-- III. DETAIL SURAT -->
                         <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-file-earmark-text me-2"></i>Detail Surat</h6>
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -96,15 +88,14 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold small text-dark">Keperluan <span class="text-danger">*</span></label>
-                                <input type="text" name="keperluan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" 
-                                       value="{{ old('keperluan', $pengajuan->keperluan) }}" required>
+                                <input type="text" name="keperluan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"
+                                    value="{{ old('keperluan', $pengajuan->keperluan) }}" required>
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="d-flex gap-2 justify-content-end mb-4">
                     <a href="{{ route('pengajuan_surat.index') }}" class="btn btn-light px-4 py-2 fw-semibold" style="border-radius: 8px;">Batal</a>
                     <button type="submit" class="btn text-white px-4 py-2 fw-semibold shadow-none" style="background-color: #ff6b00; border-radius: 8px;">
@@ -113,12 +104,11 @@
                 </div>
             </div>
 
-            <!-- Kolom Kanan: Status & Info -->
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm sticky-top" style="top: 20px;">
                     <div class="card-body p-4">
                         <h6 class="fw-bold mb-4 text-dark border-bottom pb-2">Status & Metadata</h6>
-                        
+
                         <div class="mb-3">
                             <label class="text-muted extra-small d-block mb-1 text-uppercase fw-bold">Status Saat Ini</label>
                             <span class="badge rounded-pill px-3 py-2 
@@ -160,12 +150,19 @@
 </div>
 
 <style>
-    .extra-small { font-size: 0.7rem; }
-    .form-control:focus, .form-select:focus {
+    .extra-small {
+        font-size: 0.7rem;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
         box-shadow: none;
         border: 1px solid #ff6b0044 !important;
         background-color: #fff !important;
     }
-    hr { border-top: 1px solid #eee; }
+
+    hr {
+        border-top: 1px solid #eee;
+    }
 </style>
 @endsection

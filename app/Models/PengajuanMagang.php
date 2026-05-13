@@ -21,15 +21,9 @@ class PengajuanMagang extends Model
         'status_magang',
         'keterangan'
     ];
-
-    // Otomatis mengubah data JSON menjadi Array saat ditarik dari database
     protected $casts = [
         'file_pendukung' => 'array',
     ];
-
-    /**
-     * Relasi satu ke banyak dengan PengajuanSurat
-     */
     public function pengajuanSurats()
     {
         return $this->hasMany(PengajuanSurat::class, 'magang_id');

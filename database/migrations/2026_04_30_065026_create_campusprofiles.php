@@ -22,7 +22,6 @@ return new class extends Migration
         $table->string('website');
         $table->string('email_kampus');
         $table->string('logo_kampus')->nullable();
-        // kode_surat dihapus dari sini karena bikin error 500
         $table->string('nama_kontak_person');
         $table->string('telepon_kontak_person');
         $table->string('jabatan_penandatangan');
@@ -39,7 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Pastikan nama tabel di sini juga 'campusprofiles'
         Schema::dropIfExists('campusprofiles');
     }
 };
