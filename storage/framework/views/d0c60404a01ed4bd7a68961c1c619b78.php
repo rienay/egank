@@ -1,6 +1,5 @@
-<!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light-white elevation-1" style="border-right: 1px solid #e2e8f0;">
-    <!-- Brand Logo -->
+
     <a href="#" class="brand-link border-bottom-0 d-flex align-items-center" style="padding: 20px 24px; background: #fff;">
         <img src="<?php echo e(asset('img/logoe.png')); ?>" 
              alt="Logo" 
@@ -9,10 +8,8 @@
         <span class="brand-text font-weight-bold" style="font-size: 1.2rem; color: #0f172a; letter-spacing: -0.5px; margin-left: 10px;">e-Gang</span>
     </a>
 
-    <!-- Sidebar -->
     <div class="sidebar d-flex flex-column" style="padding: 0 14px;">
         
-        <!-- Sidebar Menu -->
         <nav class="mt-3 flex-grow-1">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu">
                 
@@ -60,7 +57,6 @@
             </ul>
         </nav>
 
-        <!-- User Panel (Floating Style) -->
         <div class="user-panel-footer mt-auto" style="padding-bottom: 20px;">
             <div class="d-flex align-items-center p-3" style="background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9;">
                 <div class="image">
@@ -88,9 +84,8 @@
 </aside>
 
 <style>
-    /* CSS Tambahan untuk Sidebar Modern */
     .sidebar-light-white .nav-sidebar > .nav-item > .nav-link.active {
-        background-color: #fff5f0 !important; /* Soft Orange */
+        background-color: #fff5f0 !important;
         color: #ff6600 !important;
         box-shadow: none;
     }
@@ -104,7 +99,6 @@
         margin-left: 8px;
     }
 
-    /* Menghilangkan panah dropdown jika tidak ada sub-menu */
     .nav-sidebar .nav-link i.right {
         display: none;
     }

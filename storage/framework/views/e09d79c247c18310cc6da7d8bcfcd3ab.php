@@ -17,10 +17,7 @@
     </div>
 
     <div class="row g-3">
-        <!-- Kolom Utama: Data Detail -->
         <div class="col-lg-8">
-            
-            <!-- 1. Informasi Status & Surat -->
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-info-circle me-2"></i>Informasi Pengajuan</h5>
@@ -58,8 +55,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- 2. Data Mahasiswa & Perusahaan -->
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-person-workspace me-2"></i>Data Mahasiswa & Magang</h5>
@@ -67,7 +62,9 @@
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table mb-0">
-                            <tr class="bg-light"><th colspan="2" class="px-4 py-2">Identitas Mahasiswa</th></tr>
+                            <tr class="bg-light">
+                                <th colspan="2" class="px-4 py-2">Identitas Mahasiswa</th>
+                            </tr>
                             <tr>
                                 <th width="200" class="ps-4">NIM</th>
                                 <td><?php echo e($pengajuan->magang?->nim); ?></td>
@@ -85,7 +82,9 @@
                                 <td><?php echo e($pengajuan->magang?->prodi); ?> / <?php echo e($pengajuan->magang?->angkatan); ?></td>
                             </tr>
 
-                            <tr class="bg-light"><th colspan="2" class="px-4 py-2">Detail Tempat Magang</th></tr>
+                            <tr class="bg-light">
+                                <th colspan="2" class="px-4 py-2">Detail Tempat Magang</th>
+                            </tr>
                             <tr>
                                 <th class="ps-4">Nama Perusahaan</th>
                                 <td><strong><?php echo e($pengajuan->magang?->perusahaan); ?></strong></td>
@@ -97,8 +96,9 @@
                             <tr>
                                 <th class="ps-4">Periode</th>
                                 <td>
-                                    <?php echo e(\Carbon\Carbon::parse($pengajuan->magang?->tgl_mulai)->format('d M Y')); ?> 
-                                    s/d 
+                                    <?php echo e(\Carbon\Carbon::parse($pengajuan->magang?->tgl_mulai)->format('d M Y')); ?>
+
+                                    s/d
                                     <?php echo e(\Carbon\Carbon::parse($pengajuan->magang?->tgl_selesai)->format('d M Y')); ?>
 
                                 </td>
@@ -108,17 +108,15 @@
                 </div>
             </div>
 
-            <!-- 3. File Lampiran / Surat Pendukung -->
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-paperclip me-2"></i>Dokumen Lampiran</h5>
                 </div>
                 <div class="card-body">
                     <?php
-                        // Asumsi file_pendukung disimpan sebagai array/JSON di database
-                        $files = is_array($pengajuan->magang?->file_pendukung) 
-                                 ? $pengajuan->magang->file_pendukung 
-                                 : json_decode($pengajuan->magang?->file_pendukung ?? '[]', true);
+                    $files = is_array($pengajuan->magang?->file_pendukung)
+                    ? $pengajuan->magang->file_pendukung
+                    : json_decode($pengajuan->magang?->file_pendukung ?? '[]', true);
                     ?>
 
                     <?php if(count($files) > 0): ?>
@@ -129,9 +127,9 @@
                                 <div class="flex-shrink-0 me-3">
                                     <?php $ext = pathinfo($file, PATHINFO_EXTENSION); ?>
                                     <?php if(in_array($ext, ['jpg','jpeg','png'])): ?>
-                                        <i class="bi bi-file-earmark-image text-primary fs-2"></i>
+                                    <i class="bi bi-file-earmark-image text-primary fs-2"></i>
                                     <?php else: ?>
-                                        <i class="bi bi-file-earmark-pdf text-danger fs-2"></i>
+                                    <i class="bi bi-file-earmark-pdf text-danger fs-2"></i>
                                     <?php endif; ?>
                                 </div>
                                 <div class="flex-grow-1 min-width-0">
@@ -155,9 +153,7 @@
             </div>
         </div>
 
-        <!-- Sidebar Aksi (Kanan) -->
         <div class="col-lg-4">
-            <!-- QR Code (Hanya jika disetujui) -->
             <?php if($pengajuan->status == 'disetujui' && $pengajuan->qr_code): ?>
             <div class="card shadow-sm border-0 mb-3 text-center">
                 <div class="card-body">
@@ -168,7 +164,6 @@
             </div>
             <?php endif; ?>
 
-            <!-- Panel Aksi -->
             <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
                 <div class="card-header bg-white border-0 py-3">
                     <h5 class="fw-bold mb-0">Aksi Admin</h5>
@@ -215,7 +210,6 @@
     </div>
 </div>
 
-<!-- Modal Tolak (Wajib isi alasan) -->
 <div class="modal fade" id="rejectModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">

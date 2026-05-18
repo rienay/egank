@@ -9,7 +9,6 @@
         --text-dark: #2d3748;
     }
 
-    /* Card & Container */
     .card-modern {
         border: none;
         border-radius: 20px;
@@ -18,12 +17,10 @@
         margin-bottom: 2rem;
     }
 
-    /* Typography & Header */
     .content-header-modern {
         padding: 1.5rem 0;
     }
 
-    /* Table Styling */
     .table thead th {
         background-color: var(--soft-gray);
         color: #8a92a6;
@@ -42,7 +39,6 @@
         vertical-align: middle;
     }
 
-    /* Avatar & Badge */
     .avatar-circle {
         width: 42px !important;
         height: 42px !important;
@@ -66,7 +62,6 @@
         font-size: 0.85rem;
     }
 
-    /* Buttons */
     .btn-orange {
         background-color: var(--primary-orange);
         color: white;
@@ -84,7 +79,6 @@
         box-shadow: 0 5px 15px rgba(255, 120, 45, 0.3);
     }
 
-    /* Action Buttons */
     .action-btn {
         width: 38px;
         height: 38px;
@@ -116,7 +110,6 @@
         color: #dc3545 !important;
     }
 
-    /* FIX ALERT CSS */
     .alert-modern {
         background-color: #ffffff !important;
         border: none !important;
@@ -138,7 +131,6 @@
         flex-shrink: 0;
     }
 
-    /* FIX CLOSE BUTTON */
     .btn-close-modern {
         background: none;
         border: none;
@@ -159,7 +151,6 @@
 </style>
 
 <div class="container-fluid px-4">
-    <!-- Header Section -->
     <div class="content-header-modern d-flex align-items-center justify-content-between">
         <div>
             <h3 class="fw-bold m-0" style="color: var(--text-dark);">Data Mahasiswa</h3>
@@ -175,7 +166,6 @@
         </a>
     </div>
 
-    <!-- ALERT WITH AUTO-CLOSE AND DISMISS -->
     <?php if(session()->has('success')): ?>
         <div id="success-alert" class="alert alert-modern alert-dismissible fade show mb-4 border-0" role="alert">
             <div class="d-flex align-items-center">
@@ -187,17 +177,14 @@
                     <div class="text-secondary small"><?php echo e(session('success')); ?></div>
                 </div>
 
-                <!-- Tombol X yang dipasang pemicu -->
                 <button type="button" class="btn-close-modern ms-auto" data-bs-dismiss="alert" aria-label="Close">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Script supaya alert bisa hilang kalau dipencet atau hilang sendiri dalam 5 detik -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Hilang otomatis setelah 5 detik
                 setTimeout(function() {
                     let alertElement = document.getElementById('success-alert');
                     if (alertElement) {
@@ -209,7 +196,6 @@
         </script>
     <?php endif; ?>
 
-    <!-- Table Card -->
     <div class="card card-modern">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -293,7 +279,6 @@
         </div>
     </div>
 
-    <!-- Pagination -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
         <p class="text-muted small m-0">
             Menampilkan <?php echo e($users->firstItem() ?? 0); ?> - <?php echo e($users->lastItem() ?? 0); ?> dari <?php echo e($users->total()); ?> data

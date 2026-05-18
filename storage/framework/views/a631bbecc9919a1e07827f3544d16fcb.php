@@ -39,7 +39,6 @@
 </style>
 
 <div class="container-fluid">
-    <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-5">
         <div>
             <h3 class="font-weight-bold text-dark mb-1">Profil Kampus</h3>
@@ -51,7 +50,6 @@
         </button>
     </div>
 
-    <!-- Menampilkan Pesan Error Validasi -->
     <?php if($errors->any()): ?>
         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert" style="border-radius: 10px;">
             <strong>Gagal Menyimpan Data!</strong> Silakan periksa kembali isian form Anda. (Pastikan gambar tidak lebih dari 2MB)
@@ -66,7 +64,6 @@
         </div>
     <?php endif; ?>
 
-    <!-- Menampilkan Pesan Sukses -->
     <?php if(session()->has('success')): ?>
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert" style="border-radius: 10px;">
             <i class="fas fa-check-circle mr-2"></i> <strong>Berhasil!</strong> <?php echo e(session('success')); ?>
@@ -83,7 +80,6 @@
             <div class="card-body p-4">
                 <div class="row align-items-center">
                     
-                    <!-- LOGO SECTION -->
                     <div class="col-lg-2 col-md-3 text-center mb-3 mb-md-0">
                         <div class="position-relative d-inline-block">
                             <?php if($profile->logo_kampus): ?>
@@ -99,7 +95,6 @@
                         </div>
                     </div>
 
-                    <!-- CONTENT SECTION -->
                     <div class="col-lg-6 col-md-5">
                         <h4 class="font-weight-bold mb-1"><?php echo e($profile->nama_kampus); ?></h4>
                         <p class="text-primary-kampus font-weight-medium mb-3"><?php echo e($profile->kementerian); ?></p>
@@ -120,7 +115,6 @@
                         </div>
                     </div>
 
-                    <!-- ACTION SECTION -->
                     <div class="col-lg-4 col-md-4 text-md-right border-left pl-lg-5">
                         <div class="mb-3">
                             <small class="text-muted d-block mb-1">Penandatangan:</small>

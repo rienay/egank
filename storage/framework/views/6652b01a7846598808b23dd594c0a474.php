@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        /* PENGATURAN KERTAS A4 */
         @page {
             size: A4;
-            margin: 0; /* Margin diatur di body agar lebih presisi */
+            margin: 
         }
 
         body {
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            padding: 2.5cm 2cm 2cm 2.5cm; /* Atas, Kanan, Bawah, Kiri (Margin Kiri lebih lebar untuk arsip) */
+            padding: 2.5cm 2cm 2cm 2.5cm;
             line-height: 1.4;
             background-color: #ffffff;
             color: #000;
         }
 
-        /* KOP SURAT */
         .table-kop {
             width: 100%;
-            border-bottom: 3.5px solid #000; /* Garis tebal Kop */
+            border-bottom: 3.5px solid #000; 
             padding-bottom: 2px;
             margin-bottom: 2px;
         }
@@ -47,26 +45,23 @@
             margin-bottom: 20px;
         }
 
-        /* DATA NOMOR & TANGGAL */
         .table-meta {
             width: 100%;
             margin-bottom: 20px;
             font-size: 11pt;
         }
 
-        /* ISI SURAT */
         .isi-surat {
             text-align: justify;
             font-size: 11pt;
         }
 
         .paragraf {
-            text-indent: 1.25cm; /* Indentasi standar surat dinas */
+            text-indent: 1.25cm;
             margin-top: 10px;
             margin-bottom: 10px;
         }
 
-        /* TABEL DATA MAHASISWA */
         .tabel-data {
             width: 100%;
             border-collapse: collapse;
@@ -81,7 +76,6 @@
 
         .tabel-data th { background-color: #f2f2f2; text-align: center; }
 
-        /* AREA TANDA TANGAN & TEMBUSAN (Kunci agar tidak terpisah halaman) */
         .keep-together {
             page-break-inside: avoid;
         }
@@ -121,7 +115,6 @@
     $tanggalSelesai = $pengajuan->magang?->tgl_selesai ? \Carbon\Carbon::parse($pengajuan->magang->tgl_selesai)->translatedFormat('d F Y') : '-';
 ?>
 
-<!-- KOP -->
 <table class="table-kop" border="0" cellspacing="0" cellpadding="0">
     <tr>
         <td class="logo-col">
@@ -140,7 +133,6 @@
 </table>
 <div class="line-thin"></div>
 
-<!-- META -->
 <table class="table-meta" border="0">
     <tr>
         <td width="60%">
@@ -155,7 +147,6 @@
     </tr>
 </table>
 
-<!-- TUJUAN -->
 <div style="margin-bottom: 20px; font-size: 11pt;">
     Yth. <strong>Pimpinan / HRD</strong><br>
     <strong><?php echo e($pengajuan->magang?->perusahaan ?? 'Nama Instansi'); ?></strong><br>
@@ -163,7 +154,6 @@
 
 </div>
 
-<!-- ISI -->
 <div class="isi-surat">
     <p>Dengan hormat,</p>
     <p class="paragraf">
@@ -174,7 +164,6 @@
     </p>
 </div>
 
-<!-- TABEL MAHASISWA -->
 <table class="tabel-data">
     <thead>
         <tr>
@@ -200,7 +189,6 @@
     </p>
 </div>
 
-<!-- PENUTUP & TTD (Satu Kesatuan) -->
 <div class="keep-together">
     <table class="table-ttd" border="0">
         <tr>

@@ -95,7 +95,7 @@
                                     <i class="fas fa-upload"></i>
                                 </div>
                                 <p class="text-sm font-semibold text-[#111827] mb-1">Klik atau seret file ke sini</p>
-                                <p class="text-xs text-gray-400 mb-3">Maksimal 5 file (.PDF, .JPG, .PNG)</p>
+                                <p class="text-xs text-gray-400 mb-3">File Dikirim Dalam Bentuk .PDF, .JPG, .PNG</p>
                                 
                                 <div id="file-preview" class="w-full bg-gray-50 rounded-lg p-3 hidden z-20 relative">
                                     <p id="file-count" class="text-xs font-bold text-gray-700 mb-2 border-b pb-2 text-left">0/5 file terpilih</p>

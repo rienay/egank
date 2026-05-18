@@ -3,7 +3,7 @@
 <?php $__env->startSection('content'); ?>
 <div class="bg-slate-50 min-h-screen pb-12">
     <div class="max-w-4xl mx-auto px-4 py-8">
-        
+
         <div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-800">Pedoman Program Magang Industri</h1>
             <p class="text-gray-500 text-sm mt-1">Panduan lengkap alur dan persyaratan magang untuk mahasiswa Teknik Informatika Politeknik Negeri Cilacap.</p>
@@ -19,47 +19,47 @@
 
         <div class="mb-10">
             <h2 class="text-xl font-bold text-[#111827] mb-6">Langkah-Langkah Pelaksanaan Magang</h2>
-            
+
             <div class="flex flex-col gap-4">
                 <?php
-                    $steps = [
-                        [
-                            'no' => 1, 
-                            'title' => 'Persiapan dan Pendaftaran', 
-                            'desc' => 'Mahasiswa mencari tempat magang yang sesuai dengan bidang studi dan mengisi formulir pendaftaran program magang.', 
-                            'icon' => 'far fa-file-alt'
-                        ],
-                        [
-                            'no' => 2, 
-                            'title' => 'Pengajuan Surat Pengantar', 
-                            'desc' => 'Mengajukan surat pengantar magang melalui sistem e-Surat dengan melengkapi data perusahaan/instansi tujuan.', 
-                            'icon' => 'far fa-calendar-alt'
-                        ],
-                        [
-                            'no' => 3, 
-                            'title' => 'Approval dan Pembekalan', 
-                            'desc' => 'Setelah surat disetujui, mahasiswa mengikuti pembekalan magang yang diselenggarakan oleh jurusan.', 
-                            'icon' => 'fas fa-user-friends'
-                        ],
-                        [
-                            'no' => 4, 
-                            'title' => 'Pelaksanaan Magang', 
-                            'desc' => 'Melaksanakan kegiatan magang di industri/perusahaan dengan bimbingan mentor dari industri dan dosen pembimbing.', 
-                            'icon' => 'far fa-check-square'
-                        ],
-                        [
-                            'no' => 5, 
-                            'title' => 'Monitoring dan Evaluasi', 
-                            'desc' => 'Melakukan konsultasi berkala dengan dosen pembimbing dan mengisi logbook kegiatan magang secara rutin.', 
-                            'icon' => 'fas fa-book-open'
-                        ],
-                        [
-                            'no' => 6, 
-                            'title' => 'Penyelesaian dan Pelaporan', 
-                            'desc' => 'Menyelesaikan magang, membuat laporan akhir, dan mengikuti seminar hasil magang.', 
-                            'icon' => 'far fa-bookmark'
-                        ],
-                    ];
+                $steps = [
+                [
+                'no' => 1,
+                'title' => 'Persiapan dan Pendaftaran',
+                'desc' => 'Mahasiswa mencari tempat magang yang sesuai dengan bidang studi dan mengisi formulir pendaftaran program magang.',
+                'icon' => 'far fa-file-alt'
+                ],
+                [
+                'no' => 2,
+                'title' => 'Pengajuan Surat Pengantar',
+                'desc' => 'Mengajukan surat pengantar magang melalui sistem e-Surat dengan melengkapi data perusahaan/instansi tujuan.',
+                'icon' => 'far fa-calendar-alt'
+                ],
+                [
+                'no' => 3,
+                'title' => 'Approval dan Pembekalan',
+                'desc' => 'Setelah surat disetujui, mahasiswa mengikuti pembekalan magang yang diselenggarakan oleh jurusan.',
+                'icon' => 'fas fa-user-friends'
+                ],
+                [
+                'no' => 4,
+                'title' => 'Pelaksanaan Magang',
+                'desc' => 'Melaksanakan kegiatan magang di industri/perusahaan dengan bimbingan mentor dari industri dan dosen pembimbing.',
+                'icon' => 'far fa-check-square'
+                ],
+                [
+                'no' => 5,
+                'title' => 'Monitoring dan Evaluasi',
+                'desc' => 'Melakukan konsultasi berkala dengan dosen pembimbing dan mengisi logbook kegiatan magang secara rutin.',
+                'icon' => 'fas fa-book-open'
+                ],
+                [
+                'no' => 6,
+                'title' => 'Penyelesaian dan Pelaporan',
+                'desc' => 'Menyelesaikan magang, membuat laporan akhir, dan mengikuti seminar hasil magang.',
+                'icon' => 'far fa-bookmark'
+                ],
+                ];
                 ?>
 
                 <?php $__currentLoopData = $steps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -68,12 +68,12 @@
                         <?php echo e($step['no']); ?>
 
                     </div>
-                    
+
                     <div class="flex-grow pr-4">
                         <h3 class="font-bold text-[#111827] text-base mb-1"><?php echo e($step['title']); ?></h3>
                         <p class="text-sm text-gray-500 leading-relaxed"><?php echo e($step['desc']); ?></p>
                     </div>
-                    
+
                     <i class="<?php echo e($step['icon']); ?> text-blue-600 text-lg shrink-0 opacity-80 hidden sm:block"></i>
                 </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -168,7 +168,7 @@
         <div class="bg-[#ebfbf1] rounded-xl p-8 mb-8 border border-green-50">
             <h3 class="text-[#111827] font-bold text-lg mb-2">Unduh Berkas Magang</h3>
             <p class="text-gray-600 text-sm mb-6 leading-relaxed">Unduh template laporan magang, logbook, dan dokumen pendukung lainnya yang diperlukan selama program magang.</p>
-            
+
             <a href="#" class="bg-[#00a651] hover:bg-green-700 text-white text-sm font-medium py-2.5 px-6 rounded-md transition inline-flex items-center w-max">
                 <i class="fas fa-download mr-2 text-xs"></i> unduh
             </a>
@@ -177,11 +177,11 @@
         <div class="bg-[#f0f7ff] rounded-xl p-8 mb-4 border border-blue-50">
             <h3 class="text-[#111827] font-bold text-lg mb-4">Butuh Bantuan?</h3>
             <p class="text-gray-600 text-sm mb-6">Jika Anda memiliki pertanyaan atau kendala terkait program magang, silakan hubungi:</p>
-            
+
             <div class="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
                 <p class="font-bold text-gray-800 mb-1 text-sm">Koordinator Magang Jurusan</p>
-                <p class="text-gray-600 mb-1 text-sm">Dr. Ahmad Fauzi, M.Kom</p>
-                <p class="text-sm mb-1 text-gray-600">Email: <a href="mailto:ahmad.fauzi@pnc.ac.id" class="text-blue-500 hover:underline">ahmad.fauzi@pnc.ac.id</a></p>
+                <p class="text-gray-600 mb-1 text-sm">Cahya Vikasari, S.T., M.Eng.</p>
+                <p class="text-sm mb-1 text-gray-600">Email: <a href="cahyavikasari@pnc.ac.id" class="text-blue-500 hover:underline">cahyavikasari@pnc.ac.id</a></p>
                 <p class="text-sm mb-5 text-gray-600">Telp: (0282) 123-4567</p>
                 <p class="text-xs text-gray-400">Jam Konsultasi: Senin - Jumat, 09.00 - 15.00 WIB</p>
             </div>

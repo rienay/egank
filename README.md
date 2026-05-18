@@ -64,5 +64,42 @@ Berdasarkan Entity Relationship Diagram (ERD), sistem ini mengandalkan relasi ta
 * `git push origin master` (Mendorong ke repository GitHub)
 * `git status` (Mengecek status branch)
 
+## 🛠️ Analisis Teknologi & Library yang Digunakan
+Sistem informasi pengajuan surat magang (e-Gang) ini dibangun menggunakan ekosistem Laravel dengan mengintegrasikan beberapa pustaka (*library*) pihak ketiga untuk fitur-fitur spesifiknya:
+
+### 1. Framework Utama
+* **Laravel 12**: Menggunakan versi terbaru dari Laravel (terlihat dari struktur konfigurasi `bootstrap/app.php` yang ringkas berbasis *closure*).
+* **Database ORM**: Menggunakan *Eloquent ORM* bawaan Laravel.
+
+### 2. Fitur *Generate* & Ekspor PDF (Cetak Surat)
+* **Library:** `barryvdh/laravel-dompdf`
+* **Perintah Download:** `composer require barryvdh/laravel-dompdf` (Otomatis terunduh jika Anda menjalankan `composer install` pada proyek hasil *clone*).
+* **Cara Kerja:** Sistem menggunakan *Facade* `Pdf` untuk memproses data dinamis (identitas mahasiswa, tanggal, QR Code, dan profil kampus) ke dalam file tampilan HTML, lalu dirender menjadi file PDF siap unduh.
+
+### 3. Fitur Pembuatan QR Code (*Paperless Validation*)
+* **Library:** `simplesoftwareio/simple-qrcode`
+* **Perintah Download:** `composer require simplesoftwareio/simple-qrcode` (Otomatis terunduh jika Anda menjalankan `composer install` pada proyek hasil *clone*).
+* **Cara Kerja:** Menghasilkan dua format QR code. Format **SVG** untuk disimpan di *storage* server sebagai tautan validasi, dan format **Base64 PNG** untuk ditanam (*embed*) secara langsung ke dalam cetakan PDF.
+
+### 4. Fitur Pengiriman Email (Notifikasi)
+* **Library:** Bawaan Laravel (`Illuminate\Support\Facades\Mail`)
+* **Cara Kerja:** Mengirim email notifikasi otomatis saat akun mahasiswa baru ditambahkan, pengajuan magang berhasil masuk, dan saat surat magang telah disetujui admin.
+
+### 5. Fitur Penomoran Surat Otomatis
+* **Library:** Logika *backend* PHP murni dibantu dengan `Carbon` (untuk manajemen tanggal).
+* **Cara Kerja:** Sistem mengecek tahun berjalan, mencari nomor surat terakhir di tahun tersebut, lalu meng-*increment* angkanya (+1) dan memformatnya dengan awalan nol agar rapi.
+
+### 6. Desain Tampilan (UI/UX)
+* **Halaman Admin:** Menggunakan sistem *grid* dan utilitas **Bootstrap 5** beserta **Bootstrap Icons**.
+* **Halaman Publik / Mahasiswa:** Menggunakan utilitas kelas dari **Tailwind CSS** beserta ikon **FontAwesome**.
+
+### 7. Pengelolaan File Upload (Berkas & Foto)
+* **Library:** Bawaan Laravel (`Illuminate\Support\Facades\Storage`).
+* **Cara Kerja:** Memvalidasi file (ukuran dan tipe *mimes*) yang diunggah dan menyimpannya secara aman ke *disk* publik.
+
+### 8. Fitur Otentikasi Multi-Role
+* **Library:** Bawaan Laravel Auth (`Illuminate\Support\Facades\Auth`).
+* **Cara Kerja:** Mendukung multi-login menggunakan Email atau NIM, lalu melakukan *redirect* otomatis ke *dashboard* yang sesuai dengan hak akses (`admin` atau `mahasiswa`).
+
 ---
 **Developed by Sulis Rahayu** - Politeknik Negeri Cilacap.

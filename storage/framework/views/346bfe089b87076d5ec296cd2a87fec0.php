@@ -1,5 +1,5 @@
 <footer class="main-footer">
-  <strong>Copyright &copy; 2014-2021 
+  <strong>Copyright &copy; 2014-2021
     <a href="#">Sulis Rahayu</a>.
   </strong>
   All rights reserved.
@@ -23,13 +23,13 @@
 <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-
-
 <!-- Page specific script -->
 <script>
-  $(function () {
+  $(function() {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true,
+      "lengthChange": false,
+      "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({

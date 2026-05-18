@@ -29,7 +29,7 @@ class NotifikasiPengajuan extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.notifikasi', // Kita buat file ini di langkah selanjutnya
+            view: 'emails.notifikasi', 
         );
     }
 }

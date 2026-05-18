@@ -6,7 +6,6 @@
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('PUT'); ?>
 
-                <!-- HEADER -->
                 <div class="modal-header border-0 pb-0">
                     <div>
                         <h5 class="font-weight-bold mb-1">Edit Profil Kampus</h5>
@@ -15,7 +14,6 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- BODY -->
                 <div class="modal-body pt-3">
                     <h6 class="font-weight-bold mb-3" style="color:#ff6b00;">Informasi Kampus</h6>
 
@@ -55,7 +53,6 @@
                         <input type="email" name="email_kampus" value="<?php echo e($profile->email_kampus); ?>" class="form-control shadow-sm">
                     </div>
 
-                    <!-- LOGO -->
                     <div class="form-group">
                         <label class="small text-muted">Logo Kampus</label>
                         <div class="d-flex align-items-center">
@@ -96,7 +93,6 @@
                     </div>
                 </div>
 
-                <!-- FOOTER -->
                 <div class="modal-footer border-0">
                     <button type="submit" class="btn w-100 text-white font-weight-bold" style="background:linear-gradient(135deg,#ff6b00,#ff8533); border-radius:10px;">
                         Simpan Perubahan
