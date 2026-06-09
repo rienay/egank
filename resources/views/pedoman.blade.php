@@ -126,10 +126,10 @@
 
                 <div class="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm">
                     <div class="bg-[#ea580c] p-4 text-white">
-                        <h3 class="font-bold text-lg mb-1">Seminar Hasil Magang</h3>
+                        <h3 class="font-bold text-lg mb-1">Pengumpulan Dokumen</h3>
                         <div class="flex items-center text-sm text-white/90">
-                            <i class="far fa-check-square mr-2"></i>
-                            <span>Syarat: Laporan Disetujui</span>
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span>Bersamaan dengan laporan magang</span>
                         </div>
                     </div>
                     <div class="p-5 md:p-6">
@@ -138,13 +138,125 @@
                                 <div class="mt-0.5 shrink-0 text-green-600">
                                     <i class="far fa-check-circle text-[1.125rem]"></i>
                                 </div>
-                                <span class="leading-relaxed">Presentasi hasil karya atau sistem yang dikembangkan di industri.</span>
+                                <span class="leading-relaxed">Sertifikat magang dari perusahaan/instansi (asli)</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <div class="mt-0.5 shrink-0 text-green-600">
                                     <i class="far fa-check-circle text-[1.125rem]"></i>
                                 </div>
-                                <span class="leading-relaxed">Mengumpulkan form nilai dari industri dalam amplop tertutup.</span>
+                                <span class="leading-relaxed">Surat keterangan selesai magang</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Lembar penilaian dari mentor industri</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Logbook kegiatan magang yang sudah lengkap</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Form evaluasi magang dari mahasiswa</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm">
+                    <div class="bg-[#ea580c] p-4 text-white">
+                        <h3 class="font-bold text-lg mb-1">Seminar Hasil Magang</h3>
+                        <div class="flex items-center text-sm text-white/90">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span>Dijadwalkan oleh jurusan (biasanya 1 bulan setelah periode magang)</span>
+                        </div>
+                    </div>
+                    <div class="p-5 md:p-6">
+                        <ul class="flex flex-col gap-4 text-sm md:text-base text-gray-600">
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Presentasi hasil magang di hadapan dosen penguji</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Surat keterangan selesai magang</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Durasi presentasi 15-20 menit</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Logbook kegiatan magang yang sudah lengkap</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Sesi tanya jawab dengan penguji</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Mahasiswa wajib mengenakan pakaian formal</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Membawa poster/materi presentasi yang informatif</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm">
+                    <div class="bg-[#ea580c] p-4 text-white">
+                        <h3 class="font-bold text-lg mb-1">Penilaian dan Nilai Akhir</h3>
+                        <div class="flex items-center text-sm text-white/90">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span>Diumumkan setelah seminar selesai</span>
+                        </div>
+                    </div>
+                    <div class="p-5 md:p-6">
+                        <ul class="flex flex-col gap-4 text-sm md:text-base text-gray-600">
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Nilai magang terdiri dari: Penilaian mentor industri (40%), Laporan magang (30%), Seminar (30%)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Mahasiswa harus mendapatkan nilai minimal B untuk dinyatakan lulus</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Nilai akan diinput ke dalam KHS semester berjalan</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="mt-0.5 shrink-0 text-green-600">
+                                    <i class="far fa-check-circle text-[1.125rem]"></i>
+                                </div>
+                                <span class="leading-relaxed">Sertifikat magang akan diserahkan setelah semua administrasi lengkap</span>
                             </li>
                         </ul>
                     </div>

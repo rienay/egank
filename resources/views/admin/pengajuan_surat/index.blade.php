@@ -115,12 +115,17 @@
                                 </div>
                             </td>
                             <td>
-                                <select onchange="updateStatus({{ $pengajuan->id }}, this.value)"
-                                    class="form-select form-select-sm status-select {{ $pengajuan->status }}">
-                                    <option value="pending" {{ $pengajuan->status === 'pending' ? 'selected' : '' }}>⏳ Menunggu</option>
-                                    <option value="disetujui" {{ $pengajuan->status === 'disetujui' ? 'selected' : '' }}>✅ Disetujui</option>
-                                    <option value="ditolak" {{ $pengajuan->status === 'ditolak' ? 'selected' : '' }}>❌ Ditolak</option>
-                                </select>
+                                <button type="button" 
+                                    class="btn btn-sm w-100 d-flex justify-content-between align-items-center fw-medium status-btn {{ $pengajuan->status }}"
+                                    onclick="openStatusModal({{ $pengajuan->id }}, '{{ $pengajuan->status }}', {{ Js::from($pengajuan->magang?->nama ?? 'N/A') }})">
+                                    <span>
+                                        @if($pengajuan->status === 'pending') ⏳ Menunggu
+                                        @elseif($pengajuan->status === 'disetujui') ✅ Disetujui
+                                        @else ❌ Ditolak
+                                        @endif
+                                    </span>
+                                    <i class="bi bi-chevron-down ms-2 opacity-50"></i>
+                                </button>
                             </td>
                             <td class="pe-4 text-center">
                                 <div class="btn-group shadow-sm" role="group" style="border-radius: 8px; overflow: hidden;">
@@ -163,6 +168,60 @@
     </div>
 </div>
 
+<!-- Modal Update Status -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+            <form id="statusForm" method="POST">
+                @csrf
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">Update Status Pengajuan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted small mb-4">Pilih status baru untuk pengajuan surat atas nama <strong id="statusStudentName"></strong>.</p>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-4">
+                            <input type="radio" class="btn-check status-radio" name="status_pilihan" id="status_pending" value="pending" autocomplete="off">
+                            <label class="btn btn-outline-warning w-100 h-100 d-flex flex-column align-items-center p-3 rounded-3 border-2" for="status_pending">
+                                <i class="bi bi-clock-history fs-3 mb-2"></i>
+                                <span class="fw-semibold small">Pending</span>
+                            </label>
+                        </div>
+                        <div class="col-4">
+                            <input type="radio" class="btn-check status-radio" name="status_pilihan" id="status_disetujui" value="disetujui" autocomplete="off">
+                            <label class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center p-3 rounded-3 border-2" for="status_disetujui">
+                                <i class="bi bi-check-circle fs-3 mb-2"></i>
+                                <span class="fw-semibold small">Disetujui</span>
+                            </label>
+                        </div>
+                        <div class="col-4">
+                            <input type="radio" class="btn-check status-radio" name="status_pilihan" id="status_ditolak" value="ditolak" autocomplete="off">
+                            <label class="btn btn-outline-danger w-100 h-100 d-flex flex-column align-items-center p-3 rounded-3 border-2" for="status_ditolak">
+                                <i class="bi bi-x-circle fs-3 mb-2"></i>
+                                <span class="fw-semibold small">Ditolak</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="alasanPenolakanContainer" class="mt-3 d-none">
+                        <label class="form-label small fw-bold text-danger">Alasan Penolakan <span class="text-danger">*</span></label>
+                        <textarea name="alasan_penolakan" id="alasan_penolakan" class="form-control bg-light border-0" rows="3" placeholder="Masukkan alasan mengapa surat ini ditolak..."></textarea>
+                    </div>
+                </div>
+                
+                <div id="statusFooter" class="modal-footer border-0 bg-light p-3 d-none justify-content-end rounded-bottom-3" style="border-radius: 0 0 12px 12px;">
+                    <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary px-4 fw-semibold" id="btnSubmitStatus">
+                        <!-- Text Tombol Dinamis -->
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <style>
     body {
         background-color: #f8f9fa;
@@ -191,29 +250,38 @@
         background-color: #fafafa;
     }
 
-    .status-select {
+    .status-btn {
         border: 1px solid #eee;
         border-radius: 6px;
         font-weight: 500;
         cursor: pointer;
+        text-align: left;
     }
 
-    .status-select.disetujui {
+    .status-btn.disetujui {
         color: #198754;
         background-color: #f0fff4;
         border-color: #19875444;
     }
 
-    .status-select.pending {
+    .status-btn.pending {
         color: #fd7e14;
         background-color: #fffaf0;
         border-color: #fd7e1444;
     }
 
-    .status-select.ditolak {
+    .status-btn.ditolak {
         color: #dc3545;
         background-color: #fff5f5;
         border-color: #dc354544;
+    }
+
+    .status-btn:hover {
+        filter: brightness(0.95);
+    }
+
+    .btn-check:checked + .btn-outline-warning {
+        color: #fff !important;
     }
 
     .btn-white {
@@ -231,39 +299,52 @@
 </style>
 
 <script>
-    const csrfToken = "{{ csrf_token() }}";
-    const updateUrl = "{{ url('admin/pengajuan_surat') }}";
+    let currentPengajuanId = null;
 
-    async function updateStatus(id, status) {
-        if (!confirm(`Ubah status pengajuan menjadi "${status.toUpperCase()}"?`)) {
-            location.reload();
-            return;
-        }
-
-        try {
-            const res = await fetch(updateUrl + '/' + id, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    status: status
-                })
-            });
-
-            const data = await res.json();
-            if (data.success) {
-                window.location.reload();
-            } else {
-                alert('Gagal mengubah status');
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Terjadi kesalahan server');
-        }
+    function openStatusModal(id, currentStatus, studentName) {
+        currentPengajuanId = id;
+        document.getElementById('statusStudentName').innerText = studentName;
+        
+        // Reset Modal ke kondisi default
+        document.getElementById('statusForm').reset();
+        document.querySelectorAll('.status-radio').forEach(r => r.checked = false);
+        document.getElementById('alasanPenolakanContainer').classList.add('d-none');
+        document.getElementById('statusFooter').classList.add('d-none');
+        
+        const modal = new bootstrap.Modal(document.getElementById('statusModal'));
+        modal.show();
     }
+
+    document.querySelectorAll('.status-radio').forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Tampilkan tombol batal & kirim begitu status dipilih
+            document.getElementById('statusFooter').classList.remove('d-none');
+            
+            const form = document.getElementById('statusForm');
+            const alasanContainer = document.getElementById('alasanPenolakanContainer');
+            const alasanInput = document.getElementById('alasan_penolakan');
+            const btnSubmit = document.getElementById('btnSubmitStatus');
+            
+            if (this.value === 'ditolak') {
+                form.action = `/admin/pengajuan_surat/${currentPengajuanId}/reject`;
+                alasanContainer.classList.remove('d-none');
+                alasanInput.setAttribute('required', 'required');
+                btnSubmit.className = 'btn btn-danger px-4 fw-semibold';
+                btnSubmit.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Tolak & Kirim Email';
+            } else if (this.value === 'disetujui') {
+                form.action = `/admin/pengajuan_surat/${currentPengajuanId}/approve`;
+                alasanContainer.classList.add('d-none');
+                alasanInput.removeAttribute('required');
+                btnSubmit.className = 'btn btn-success px-4 fw-semibold';
+                btnSubmit.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Setujui & Kirim Email';
+            } else {
+                form.action = `/admin/pengajuan_surat/${currentPengajuanId}/resubmit`;
+                alasanContainer.classList.add('d-none');
+                alasanInput.removeAttribute('required');
+                btnSubmit.className = 'btn btn-warning text-dark px-4 fw-semibold';
+                btnSubmit.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Ubah ke Pending';
+            }
+        });
+    });
 </script>
 @endsection

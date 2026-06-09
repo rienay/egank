@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeFacade;
 use Carbon\Carbon;
 use App\Mail\SuratDisetujui;
+use App\Mail\SuratDitolak;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PengajuanSuratController extends Controller
@@ -110,10 +111,27 @@ class PengajuanSuratController extends Controller
             'jenis_surat' => 'sometimes|required|string',
             'keperluan'   => 'sometimes|required|string',
             'status'      => 'sometimes|required|in:disetujui,pending,ditolak',
+            // Validasi untuk data magang dari form edit
+            'nim' => 'sometimes|required|string',
+            'nama' => 'sometimes|required|string',
+            'email' => 'sometimes|required|email',
+            'prodi' => 'sometimes|required|string',
+            'angkatan' => 'sometimes|required|string',
+            'perusahaan' => 'sometimes|required|string',
+            'alamat' => 'sometimes|required|string',
+            'tgl_mulai' => 'sometimes|required|date',
+            'tgl_selesai' => 'sometimes|required|date',
+            'keterangan' => 'nullable|string',
         ]);
 
         $pengajuan = PengajuanSurat::findOrFail($id);
 
+        // Bagian untuk update data magang dari form edit
+        if ($pengajuan->magang && $request->has('nim')) {
+            $pengajuan->magang->update($request->only(['nim', 'nama', 'email', 'prodi', 'angkatan', 'perusahaan', 'alamat', 'tgl_mulai', 'tgl_selesai', 'keterangan']));
+        }
+
+        $originalStatus = $pengajuan->status;
         $updateData = [];
         if ($request->filled('jenis_surat')) {
             $updateData['jenis_surat'] = $request->jenis_surat;
@@ -150,6 +168,23 @@ class PengajuanSuratController extends Controller
             $pengajuan->update($updateData);
         }
 
+        if (isset($updateData['status']) && $updateData['status'] !== $originalStatus) {
+            $pengajuan->load(['mahasiswa', 'magang']);
+            if ($pengajuan->mahasiswa && $pengajuan->mahasiswa->email) {
+                try {
+                    if ($updateData['status'] === 'disetujui') {
+                        Mail::to($pengajuan->mahasiswa->email)->send(new SuratDisetujui($pengajuan));
+                    } elseif ($updateData['status'] === 'ditolak') {
+                        Mail::to($pengajuan->mahasiswa->email)->send(new SuratDitolak($pengajuan));
+                    }
+                } catch (\Exception $e) {
+                    if (!$request->wantsJson() && !$request->ajax()) {
+                        $request->session()->flash('error', 'Status diubah, tapi email notifikasi gagal terkirim (Cek SMTP).');
+                    }
+                }
+            }
+        }
+
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json(['success' => true, 'status' => $pengajuan->status]);
         }
@@ -172,7 +207,7 @@ class PengajuanSuratController extends Controller
 
     public function approve($id)
     {
-        $pengajuan = PengajuanSurat::findOrFail($id);
+        $pengajuan = PengajuanSurat::with(['mahasiswa', 'magang'])->findOrFail($id);
 
         if ($pengajuan->status !== 'disetujui') {
             $nomorSurat = $this->generateNomorSurat();
@@ -185,8 +220,13 @@ class PengajuanSuratController extends Controller
                 'alasan_penolakan' => null,
             ]);
 
-            if ($pengajuan->mahasiswa) {
-                Mail::to($pengajuan->mahasiswa->email)->send(new SuratDisetujui($pengajuan));
+            if ($pengajuan->mahasiswa && $pengajuan->mahasiswa->email) {
+                try {
+                    Mail::to($pengajuan->mahasiswa->email)->send(new SuratDisetujui($pengajuan));
+                    return redirect()->back()->with('success', 'Surat berhasil disetujui dan email telah dikirim.');
+                } catch (\Exception $e) {
+                    return redirect()->back()->with('success', 'Surat disetujui, namun email gagal terkirim (Periksa koneksi SMTP).');
+                }
             }
         }
 
@@ -196,7 +236,7 @@ class PengajuanSuratController extends Controller
     public function reject(Request $request, $id)
     {
         $request->validate(['alasan_penolakan' => 'required|string']);
-        $pengajuan = PengajuanSurat::findOrFail($id);
+        $pengajuan = PengajuanSurat::with(['mahasiswa', 'magang'])->findOrFail($id);
 
         if ($pengajuan->qr_code && Storage::disk('public')->exists($pengajuan->qr_code)) {
             Storage::disk('public')->delete($pengajuan->qr_code);
@@ -208,6 +248,15 @@ class PengajuanSuratController extends Controller
             'qr_code' => null,
             'alasan_penolakan' => $request->alasan_penolakan,
         ]);
+
+        if ($pengajuan->mahasiswa && $pengajuan->mahasiswa->email) {
+            try {
+                Mail::to($pengajuan->mahasiswa->email)->send(new SuratDitolak($pengajuan));
+                return redirect()->back()->with('error', 'Surat ditolak dan email telah dikirim.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Surat ditolak, namun email gagal terkirim (Periksa koneksi SMTP).');
+            }
+        }
 
         return redirect()->back()->with('error', 'Surat ditolak.');
     }

@@ -63,6 +63,10 @@
                                 <label class="form-label fw-semibold small text-dark">Alamat Perusahaan <span class="text-danger">*</span></label>
                                 <textarea name="alamat" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" rows="2" required>{{ old('alamat', $pengajuan->magang?->alamat) }}</textarea>
                             </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold small text-dark">Keterangan untuk Mahasiswa (Opsional)</label>
+                                <textarea name="keterangan" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;" rows="2" placeholder="Misal: Harap hubungi HRD sebelum tanggal mulai magang.">{{ old('keterangan', $pengajuan->magang?->keterangan) }}</textarea>
+                            </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold small text-dark">Tanggal Mulai <span class="text-danger">*</span></label>
                                 <input type="date" name="tgl_mulai" class="form-control border-0 py-2 px-3" style="background-color: #f3f4f6; border-radius: 8px;"

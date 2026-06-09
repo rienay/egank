@@ -154,8 +154,14 @@
                                         <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium"><?php echo e($data->status_magang); ?></span>
                                     </div>
                                     <div class="md:col-span-2">
-                                        <p class="text-sm text-gray-500 mb-1">Keterangan</p>
-                                        <p class="font-medium text-[#111827]"><?php echo e($data->keterangan ?? 'Tidak ada keterangan dari admin.'); ?></p>
+                                        <p class="text-sm text-gray-500 mb-1">Keterangan dari Admin</p>
+                                        <?php if($lastSurat && $lastSurat->status == 'ditolak' && $lastSurat->alasan_penolakan): ?>
+                                            <p class="font-medium text-red-700 bg-red-50 p-3 rounded-lg text-sm"><?php echo e($lastSurat->alasan_penolakan); ?></p>
+                                        <?php elseif($data->keterangan): ?>
+                                            <p class="font-medium text-gray-800 bg-gray-50 p-3 rounded-lg text-sm"><?php echo e($data->keterangan); ?></p>
+                                        <?php else: ?>
+                                            <p class="text-sm text-gray-500 italic">Tidak ada keterangan.</p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
 
