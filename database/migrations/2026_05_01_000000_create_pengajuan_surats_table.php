@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::create('pengajuan_surats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mahasiswa_id')->constrained('users')->cascadeOnDelete();
-            $table->string('kode_surat');
+            $table->foreignId('magang_id')->nullable()->constrained('pengajuan_magangs')->cascadeOnDelete();
+            $table->string('kode_surat')->nullable();
             $table->string('jenis_surat');
             $table->text('keperluan');
             $table->string('nomor_surat')->nullable();

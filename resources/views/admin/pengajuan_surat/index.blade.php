@@ -12,6 +12,11 @@
                 </ol>
             </nav>
         </div>
+        <div class="col-auto">
+            <button class="btn btn-primary px-4 py-2 font-weight-bold" data-toggle="modal" data-target="#modal-tambah-surat" style="background-color: #ff6b00; border: none; border-radius: 10px; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); font-weight: 600;">
+                <i class="bi bi-plus-circle me-2"></i> Tambah Pengajuan
+            </button>
+        </div>
     </div>
 
     <div class="row g-3 mb-4">
@@ -132,7 +137,7 @@
                                     <a href="{{ route('pengajuan_surat.show', $pengajuan->id) }}" class="btn btn-white btn-sm border" title="Lihat"><i class="bi bi-eye text-primary"></i></a>
                                     <a href="{{ route('pengajuan_surat.edit', $pengajuan->id) }}" class="btn btn-white btn-sm border" title="Edit"><i class="bi bi-pencil text-secondary"></i></a>
                                     @if($pengajuan->status === 'disetujui')
-                                    <a href="{{ route('pengajuan_surat.pdf', $pengajuan->id) }}" class="btn btn-white btn-sm border" title="Unduh"><i class="bi bi-download text-success"></i></a>
+                                    <a href="{{ route('pengajuan_surat.pdf', $pengajuan->id) }}" target="_blank" class="btn btn-white btn-sm border" title="Unduh"><i class="bi bi-download text-success"></i></a>
                                     @endif
                                     <form action="{{ route('pengajuan_surat.destroy', $pengajuan->id) }}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
@@ -175,32 +180,48 @@
             <form id="statusForm" method="POST">
                 @csrf
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">Update Status Pengajuan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title fw-bold" style="font-size: 1.15rem; color: #1f2937;">Update Status Surat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body p-4">
-                    <p class="text-muted small mb-4">Pilih status baru untuk pengajuan surat atas nama <strong id="statusStudentName"></strong>.</p>
+                    <p class="text-muted small mb-3">Pilih Status Surat untuk <strong id="statusStudentName" class="text-dark"></strong>:</p>
                     
-                    <div class="row g-3 mb-3">
-                        <div class="col-4">
-                            <input type="radio" class="btn-check status-radio" name="status_pilihan" id="status_pending" value="pending" autocomplete="off">
-                            <label class="btn btn-outline-warning w-100 h-100 d-flex flex-column align-items-center p-3 rounded-3 border-2" for="status_pending">
-                                <i class="bi bi-clock-history fs-3 mb-2"></i>
-                                <span class="fw-semibold small">Pending</span>
+                    <div class="d-flex flex-column gap-3 mb-3">
+                        <!-- Pending Option -->
+                        <div class="status-option-wrapper">
+                            <input type="radio" class="status-radio d-none" name="status_pilihan" id="status_pending" value="pending" autocomplete="off">
+                            <label class="status-option-label w-100 d-flex align-items-center p-3 rounded-3 border" for="status_pending" style="cursor: pointer; transition: all 0.2s; border-color: #e5e7eb; background-color: #fff; margin-bottom: 0;">
+                                <i class="bi bi-clock-history text-warning fs-4 me-3" style="flex-shrink: 0;"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark" style="font-size: 0.95rem;">Pending</h6>
+                                    <p class="text-muted mb-0 small" style="font-size: 0.8rem;">Surat masih dalam proses peninjauan</p>
+                                </div>
                             </label>
                         </div>
-                        <div class="col-4">
-                            <input type="radio" class="btn-check status-radio" name="status_pilihan" id="status_disetujui" value="disetujui" autocomplete="off">
-                            <label class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center p-3 rounded-3 border-2" for="status_disetujui">
-                                <i class="bi bi-check-circle fs-3 mb-2"></i>
-                                <span class="fw-semibold small">Disetujui</span>
+
+                        <!-- Disetujui Option -->
+                        <div class="status-option-wrapper">
+                            <input type="radio" class="status-radio d-none" name="status_pilihan" id="status_disetujui" value="disetujui" autocomplete="off">
+                            <label class="status-option-label w-100 d-flex align-items-center p-3 rounded-3 border" for="status_disetujui" style="cursor: pointer; transition: all 0.2s; border-color: #e5e7eb; background-color: #fff; margin-bottom: 0;">
+                                <i class="bi bi-check-circle text-success fs-4 me-3" style="flex-shrink: 0;"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark" style="font-size: 0.95rem;">Disetujui</h6>
+                                    <p class="text-muted mb-0 small" style="font-size: 0.8rem;">Surat telah disetujui</p>
+                                </div>
                             </label>
                         </div>
-                        <div class="col-4">
-                            <input type="radio" class="btn-check status-radio" name="status_pilihan" id="status_ditolak" value="ditolak" autocomplete="off">
-                            <label class="btn btn-outline-danger w-100 h-100 d-flex flex-column align-items-center p-3 rounded-3 border-2" for="status_ditolak">
-                                <i class="bi bi-x-circle fs-3 mb-2"></i>
-                                <span class="fw-semibold small">Ditolak</span>
+
+                        <!-- Ditolak Option -->
+                        <div class="status-option-wrapper">
+                            <input type="radio" class="status-radio d-none" name="status_pilihan" id="status_ditolak" value="ditolak" autocomplete="off">
+                            <label class="status-option-label w-100 d-flex align-items-center p-3 rounded-3 border" for="status_ditolak" style="cursor: pointer; transition: all 0.2s; border-color: #e5e7eb; background-color: #fff; margin-bottom: 0;">
+                                <i class="bi bi-x-circle text-danger fs-4 me-3" style="flex-shrink: 0;"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark" style="font-size: 0.95rem;">Ditolak</h6>
+                                    <p class="text-muted mb-0 small" style="font-size: 0.8rem;">Surat tidak disetujui</p>
+                                </div>
                             </label>
                         </div>
                     </div>
@@ -211,10 +232,10 @@
                     </div>
                 </div>
                 
-                <div id="statusFooter" class="modal-footer border-0 bg-light p-3 d-none justify-content-end rounded-bottom-3" style="border-radius: 0 0 12px 12px;">
-                    <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary px-4 fw-semibold" id="btnSubmitStatus">
-                        <!-- Text Tombol Dinamis -->
+                <div id="statusFooter" class="modal-footer border-0 bg-white p-3 justify-content-end gap-2" style="border-radius: 0 0 12px 12px;">
+                    <button type="button" class="btn btn-light px-4 border" data-dismiss="modal" style="border-radius: 8px; font-weight: 500; font-size: 0.95rem; background-color: #fff; border-color: #e5e7eb; color: #1f2937;">Batal</button>
+                    <button type="submit" class="btn btn-dark px-4 fw-semibold d-none align-items-center justify-content-center" id="btnSubmitStatus" style="border-radius: 8px; font-size: 0.95rem; background-color: #0b0f19; border-color: #0b0f19; color: #fff;">
+                        <i class="bi bi-envelope me-2"></i>Kirim Email
                     </button>
                 </div>
             </form>
@@ -229,6 +250,17 @@
 
     .extra-small {
         font-size: 0.75rem;
+    }
+
+    /* Custom vertical radio cards */
+    .status-option-wrapper {
+        width: 100%;
+    }
+    
+    .status-radio:checked + .status-option-label {
+        background-color: #eff6ff !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 1px #3b82f6;
     }
 
     .stat-card {
@@ -280,10 +312,6 @@
         filter: brightness(0.95);
     }
 
-    .btn-check:checked + .btn-outline-warning {
-        color: #fff !important;
-    }
-
     .btn-white {
         background: #fff;
         border: 1px solid #eee;
@@ -300,51 +328,80 @@
 
 <script>
     let currentPengajuanId = null;
+    let originalStatus = null;
 
     function openStatusModal(id, currentStatus, studentName) {
+        console.log('openStatusModal called with:', id, currentStatus, studentName);
         currentPengajuanId = id;
+        originalStatus = currentStatus;
         document.getElementById('statusStudentName').innerText = studentName;
         
         // Reset Modal ke kondisi default
         document.getElementById('statusForm').reset();
         document.querySelectorAll('.status-radio').forEach(r => r.checked = false);
         document.getElementById('alasanPenolakanContainer').classList.add('d-none');
-        document.getElementById('statusFooter').classList.add('d-none');
+        document.getElementById('btnSubmitStatus').classList.add('d-none');
         
-        const modal = new bootstrap.Modal(document.getElementById('statusModal'));
-        modal.show();
+        if (currentStatus) {
+            const radio = document.getElementById('status_' + currentStatus);
+            if (radio) {
+                radio.checked = true;
+                console.log('Checked radio: status_' + currentStatus);
+                // Trigger change event to set up form action, buttons, and text fields
+                radio.dispatchEvent(new Event('change'));
+            }
+        }
+        
+        $('#statusModal').modal('show');
     }
 
     document.querySelectorAll('.status-radio').forEach(radio => {
         radio.addEventListener('change', function() {
-            // Tampilkan tombol batal & kirim begitu status dipilih
-            document.getElementById('statusFooter').classList.remove('d-none');
-            
+            console.log('Radio changed. Selected:', this.value, 'Original:', originalStatus);
             const form = document.getElementById('statusForm');
             const alasanContainer = document.getElementById('alasanPenolakanContainer');
             const alasanInput = document.getElementById('alasan_penolakan');
             const btnSubmit = document.getElementById('btnSubmitStatus');
             
+            // Sembunyikan tombol submit jika tidak ada perubahan status
+            if (this.value === originalStatus) {
+                console.log('Selected value matches original. Hiding submit button.');
+                btnSubmit.classList.add('d-none');
+                btnSubmit.classList.remove('d-flex');
+                alasanContainer.classList.add('d-none');
+                alasanInput.removeAttribute('required');
+                return;
+            }
+            
+            // Tampilkan tombol submit jika ada perubahan status
+            console.log('Selected value differs from original. Showing submit button.');
+            btnSubmit.classList.remove('d-none');
+            btnSubmit.classList.add('d-flex');
+            
+            const baseUrl = "{{ url('admin/pengajuan_surat') }}";
+            
             if (this.value === 'ditolak') {
-                form.action = `/admin/pengajuan_surat/${currentPengajuanId}/reject`;
+                form.action = `${baseUrl}/${currentPengajuanId}/reject`;
                 alasanContainer.classList.remove('d-none');
                 alasanInput.setAttribute('required', 'required');
-                btnSubmit.className = 'btn btn-danger px-4 fw-semibold';
-                btnSubmit.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Tolak & Kirim Email';
+                btnSubmit.className = 'btn btn-dark px-4 fw-semibold d-flex align-items-center justify-content-center';
+                btnSubmit.innerHTML = '<i class="bi bi-envelope me-2"></i>Kirim Email';
             } else if (this.value === 'disetujui') {
-                form.action = `/admin/pengajuan_surat/${currentPengajuanId}/approve`;
+                form.action = `${baseUrl}/${currentPengajuanId}/approve`;
                 alasanContainer.classList.add('d-none');
                 alasanInput.removeAttribute('required');
-                btnSubmit.className = 'btn btn-success px-4 fw-semibold';
-                btnSubmit.innerHTML = '<i class="bi bi-envelope-paper me-2"></i>Setujui & Kirim Email';
+                btnSubmit.className = 'btn btn-dark px-4 fw-semibold d-flex align-items-center justify-content-center';
+                btnSubmit.innerHTML = '<i class="bi bi-envelope me-2"></i>Kirim Email';
             } else {
-                form.action = `/admin/pengajuan_surat/${currentPengajuanId}/resubmit`;
+                form.action = `${baseUrl}/${currentPengajuanId}/resubmit`;
                 alasanContainer.classList.add('d-none');
                 alasanInput.removeAttribute('required');
-                btnSubmit.className = 'btn btn-warning text-dark px-4 fw-semibold';
+                btnSubmit.className = 'btn btn-warning text-dark px-4 fw-semibold d-flex align-items-center justify-content-center';
                 btnSubmit.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Ubah ke Pending';
             }
         });
     });
 </script>
+@include('admin.pengajuan_surat.create')
+
 @endsection

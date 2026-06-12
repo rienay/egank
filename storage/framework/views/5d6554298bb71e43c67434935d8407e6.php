@@ -453,7 +453,7 @@
                 <?php echo csrf_field(); ?>
 
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>Email / NIM</label>
 
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user input-icon"></i>
@@ -461,7 +461,7 @@
                         <input
                             type="text"
                             name="email"
-                            placeholder="Masukkan email"
+                            placeholder="Masukkan email atau NIM"
                             required
                             value="<?php echo e(old('email')); ?>">
                     </div>
@@ -486,7 +486,7 @@
 
                 <div class="options">
                     <label class="remember">
-                        <input type="checkbox">
+                        <input type="checkbox" name="remember" id="remember">
                         Ingat saya
                     </label>
 

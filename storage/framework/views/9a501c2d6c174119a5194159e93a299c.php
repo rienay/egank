@@ -293,7 +293,7 @@
             <div class="bg-white rounded-lg p-6 border border-gray-100 shadow-sm">
                 <p class="font-bold text-gray-800 mb-1 text-sm">Koordinator Magang Jurusan</p>
                 <p class="text-gray-600 mb-1 text-sm">Cahya Vikasari, S.T., M.Eng.</p>
-                <p class="text-sm mb-1 text-gray-600">Email: <a href="cahyavikasari@pnc.ac.id" class="text-blue-500 hover:underline">cahyavikasari@pnc.ac.id</a></p>
+                <p class="text-sm mb-1 text-gray-600">Email: <a href="mailto:cahyavikasari@pnc.ac.id" class="text-blue-500 hover:underline">cahyavikasari@pnc.ac.id</a></p>
                 <p class="text-sm mb-5 text-gray-600">Telp: (0282) 123-4567</p>
                 <p class="text-xs text-gray-400">Jam Konsultasi: Senin - Jumat, 09.00 - 15.00 WIB</p>
             </div>

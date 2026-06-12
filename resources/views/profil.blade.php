@@ -241,7 +241,7 @@
                 </form>
                 <div class="mt-8 flex justify-center gap-4">
                     <button form="profileForm" type="submit" class="inline-flex items-center px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-semibold">
-                        <i class="fas fa-save mr-2"></i>Simpan Perubahan 1
+                        <i class="fas fa-save mr-2"></i>Simpan Perubahan
                     </button>
                     <a href="{{ route('profile.show') }}" class="inline-flex items-center px-8 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition font-semibold">
                         <i class="fas fa-times mr-2"></i>Batal

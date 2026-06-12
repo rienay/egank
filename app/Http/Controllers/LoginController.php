@@ -33,9 +33,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->role === 'admin') {
-                return redirect()->intended('/'); // Rute Dashboard Admin
+                return redirect('/'); // Rute Dashboard Admin
             } else {
-                return redirect()->intended('/home'); // Rute Halaman Mahasiswa
+                return redirect('/home'); // Rute Halaman Mahasiswa
             }
         }
 

@@ -10,6 +10,7 @@ return new class extends Migration
 {
     Schema::create('pengajuan_magangs', function (Blueprint $table) {
         $table->id();
+        $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
         $table->string('nim');
         $table->string('nama');
         $table->string('email');

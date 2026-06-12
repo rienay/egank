@@ -20,9 +20,8 @@
             <h2>Pengajuan Surat Ditolak</h2>
         </div>
         <div class="content">
-            <p>Halo, <strong><?php echo e($pengajuan->mahasiswa->name ?? 'Mahasiswa'); ?></strong>,</p>
             <p>Halo, <strong><?php echo e($pengajuan->mahasiswa?->name ?? 'Mahasiswa'); ?></strong>,</p>
-            <p></p>Dengan menyesal kami informasikan bahwa pengajuan surat Anda untuk keperluan magang di <strong><?php echo e($pengajuan->magang?->perusahaan ?? 'Perusahaan'); ?></strong> telah <strong>DITOLAK</strong>.</p>
+            <p>Dengan menyesal kami informasikan bahwa pengajuan surat Anda untuk keperluan magang di <strong><?php echo e($pengajuan->magang?->perusahaan ?? 'Perusahaan'); ?></strong> telah <strong>DITOLAK</strong>.</p>
             
             <p><strong>Alasan Penolakan:</strong></p>
             <div class="reason">

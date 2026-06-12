@@ -48,8 +48,7 @@ class PengajuanSuratController extends Controller
         }
 
         $pengajuans = $query->latest()->paginate(10)->withQueryString();
-        $magangList = PengajuanMagang::where('status', 'disetujui')
-                        ->whereDoesntHave('pengajuanSurats')
+        $magangList = PengajuanMagang::whereDoesntHave('pengajuanSurats')
                         ->get();
         $total_pending = (clone $statsQuery)->where('status', 'pending')->count();
         $total_disetujui = (clone $statsQuery)->where('status', 'disetujui')->count();
@@ -60,8 +59,7 @@ class PengajuanSuratController extends Controller
 
     public function create()
     {
-        $magangList = PengajuanMagang::where('status', 'disetujui')
-                        ->whereDoesntHave('pengajuanSurats')
+        $magangList = PengajuanMagang::whereDoesntHave('pengajuanSurats')
                         ->get();
         
         return view('admin.pengajuan_surat.create', compact('magangList'));
@@ -70,26 +68,95 @@ class PengajuanSuratController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'magang_id'   => 'required|exists:pengajuan_magangs,id',
+            'magang_id'   => 'nullable|exists:pengajuan_magangs,id',
+            'nim'         => 'required|string|max:50',
+            'nama'        => 'required|string|max:255',
+            'email'       => 'required|email|max:255',
+            'prodi'       => 'required|string|max:255',
+            'angkatan'    => 'required|string|max:4',
+            'perusahaan'  => 'required|string|max:255',
+            'alamat'      => 'required|string',
+            'tgl_mulai'   => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'jenis_surat' => 'required|string',
             'keperluan'   => 'required|string',
         ]);
 
-        $magang = PengajuanMagang::findOrFail($request->magang_id);
+        if ($request->filled('magang_id')) {
+            $magang = PengajuanMagang::findOrFail($request->magang_id);
+            $magang->update([
+                'nim' => $request->nim,
+                'nama' => $request->nama,
+                'email' => $request->email,
+                'prodi' => $request->prodi,
+                'angkatan' => $request->angkatan,
+                'perusahaan' => $request->perusahaan,
+                'alamat' => $request->alamat,
+                'tgl_mulai' => $request->tgl_mulai,
+                'tgl_selesai' => $request->tgl_selesai,
+                'status' => 'disetujui',
+            ]);
+        } else {
+            $user = \App\Models\User::where('nim', $request->nim)
+                                    ->orWhere('email', $request->email)
+                                    ->first();
+            $userId = $user ? $user->id : null;
+
+            if (!$user) {
+                $user = \App\Models\User::create([
+                    'name' => $request->nama,
+                    'email' => $request->email,
+                    'nim' => $request->nim,
+                    'prodi' => $request->prodi,
+                    'angkatan' => $request->angkatan,
+                    'password' => \Illuminate\Support\Facades\Hash::make('password123'),
+                    'role' => 'mahasiswa',
+                ]);
+                $userId = $user->id;
+            }
+
+            $magang = PengajuanMagang::create([
+                'user_id' => $userId,
+                'nim' => $request->nim,
+                'nama' => $request->nama,
+                'email' => $request->email,
+                'prodi' => $request->prodi,
+                'angkatan' => $request->angkatan,
+                'perusahaan' => $request->perusahaan,
+                'alamat' => $request->alamat,
+                'tgl_mulai' => $request->tgl_mulai,
+                'tgl_selesai' => $request->tgl_selesai,
+                'status' => 'disetujui',
+                'status_magang' => 'Belum Konfirmasi',
+                'file_pendukung' => [],
+            ]);
+        }
+
         $nomorSurat = $this->generateNomorSurat();
-        $qrPath = $this->generateQRCode();
+        
         $pengajuan = PengajuanSurat::create([
-            'mahasiswa_id' => Auth::id(),
+            'mahasiswa_id' => $magang->user_id ?? Auth::id(),
             'magang_id'    => $magang->id,
             'kode_surat'   => null,
             'jenis_surat'  => $request->jenis_surat,
             'keperluan'    => $request->keperluan,
             'nomor_surat'  => $nomorSurat,
-            'qr_code'      => $qrPath,
+            'qr_code'      => null,
             'status'       => 'disetujui',
         ]);
 
-        return redirect()->route('pengajuan_surat.show', $pengajuan->id)
+        $qrPath = $this->generateQRCode($pengajuan->id);
+        $pengajuan->update(['qr_code' => $qrPath]);
+
+        if ($magang->email) {
+            try {
+                Mail::to($magang->email)->send(new SuratDisetujui($pengajuan));
+            } catch (\Exception $e) {
+                // Silently ignore email failure
+            }
+        }
+
+        return redirect()->route('pengajuan_surat.index')
                         ->with('success', 'Surat berhasil dibuat dan auto-generate nomor surat, QR code!');
     }
 
@@ -154,6 +221,9 @@ class PengajuanSuratController extends Controller
                 }
 
                 $updateData['alasan_penolakan'] = null;
+                if ($pengajuan->magang) {
+                    $pengajuan->magang->update(['status' => 'disetujui']);
+                }
             } else {
                 if ($pengajuan->qr_code && Storage::disk('public')->exists($pengajuan->qr_code)) {
                     Storage::disk('public')->delete($pengajuan->qr_code);
@@ -161,6 +231,9 @@ class PengajuanSuratController extends Controller
 
                 $updateData['nomor_surat'] = null;
                 $updateData['qr_code'] = null;
+                if ($pengajuan->magang) {
+                    $pengajuan->magang->update(['status' => $request->status === 'ditolak' ? 'ditolak' : 'Menunggu Validasi']);
+                }
             }
         }
 
@@ -220,6 +293,10 @@ class PengajuanSuratController extends Controller
                 'alasan_penolakan' => null,
             ]);
 
+            if ($pengajuan->magang) {
+                $pengajuan->magang->update(['status' => 'disetujui']);
+            }
+
             if ($pengajuan->mahasiswa && $pengajuan->mahasiswa->email) {
                 try {
                     Mail::to($pengajuan->mahasiswa->email)->send(new SuratDisetujui($pengajuan));
@@ -249,6 +326,10 @@ class PengajuanSuratController extends Controller
             'alasan_penolakan' => $request->alasan_penolakan,
         ]);
 
+        if ($pengajuan->magang) {
+            $pengajuan->magang->update(['status' => 'ditolak']);
+        }
+
         if ($pengajuan->mahasiswa && $pengajuan->mahasiswa->email) {
             try {
                 Mail::to($pengajuan->mahasiswa->email)->send(new SuratDitolak($pengajuan));
@@ -269,6 +350,10 @@ class PengajuanSuratController extends Controller
             'nomor_surat' => null,
             'alasan_penolakan' => null,
         ]);
+
+        if ($pengajuan->magang) {
+            $pengajuan->magang->update(['status' => 'Menunggu Validasi']);
+        }
 
         return redirect()->back()->with('success', 'Surat berhasil diajukan ulang.');
     }
@@ -291,7 +376,7 @@ class PengajuanSuratController extends Controller
         $safeNim = $pengajuan->magang?->nim ? preg_replace('/[^A-Za-z0-9_\-]/', '_', $pengajuan->magang->nim) : 'unknown';
         $filename = "Surat_{$safeJenis}_{$safeNim}.pdf";
         
-        return $pdf->download($filename);
+        return $pdf->stream($filename);
     }
 
     public function validasiQR($id)
@@ -312,7 +397,7 @@ class PengajuanSuratController extends Controller
         $urut = $lastSurat ? ((int) explode('/', $lastSurat->nomor_surat)[0] + 1) : 1;
         $formattedUrut = str_pad($urut, 4, '0', STR_PAD_LEFT);
 
-        return "{$formattedUrut}/PL.43/PP.02.01/{$tahun}";
+        return "{$formattedUrut}/PL.43/PP.02.10/{$tahun}";
     }
 
     private function generateQRCode($id = null)

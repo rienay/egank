@@ -118,7 +118,7 @@
             </div>
             <div>
                 <h4 class="font-bold text-gray-800 text-sm md:text-base">Pendaftaran Dibuka</h4>
-                <p class="text-xs text-gray-500">Mahaiswa mulai mendaftar dan mencari tempat magang</p>
+                <p class="text-xs text-gray-500">Mahasiswa mulai mendaftar dan mencari tempat magang</p>
             </div>
         </div>
 
@@ -128,7 +128,7 @@
                 <p class="text-[10px]">Februari</p>
             </div>
             <div>
-                <h4 class="font-bold text-gray-800 text-sm md:text-base">Batas Pengajuan SUrat</h4>
+                <h4 class="font-bold text-gray-800 text-sm md:text-base">Batas Pengajuan Surat</h4>
                 <p class="text-xs text-gray-500">Deadline pengajuan surat pengantar magang</p>
             </div>
         </div>

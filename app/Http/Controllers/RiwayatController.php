@@ -14,13 +14,7 @@ class RiwayatController extends Controller
         $user = Auth::user();
 
         $riwayat = PengajuanMagang::with('pengajuanSurats')
-            ->where(function ($query) use ($user) {
-                $query->where('email', $user->email);
-
-                if (!empty($user->nim)) {
-                    $query->orWhere('nim', $user->nim);
-                }
-            })
+            ->where('user_id', $user->id)
             ->latest()
             ->get();
 
@@ -34,12 +28,7 @@ class RiwayatController extends Controller
         if ($request->filled('user_id')) {
             $selectedUser = User::find($request->user_id);
             if ($selectedUser) {
-                $query->where(function ($q) use ($selectedUser) {
-                    $q->where('email', $selectedUser->email);
-                    if (!empty($selectedUser->nim)) {
-                        $q->orWhere('nim', $selectedUser->nim);
-                    }
-                });
+                $query->where('user_id', $selectedUser->id);
             }
         }
 

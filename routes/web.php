@@ -26,6 +26,11 @@ Route::get('/home', function () {
 Route::get('/validasi-surat/{id}', [PengajuanSuratController::class, 'validasiQR'])->name('validasi.surat');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
+
+        if (auth()->user()->role !== 'admin') {
+            return redirect('/home');
+        }
+
         $tahun_ini = now()->year;
         $pengajuan_per_bulan = [];
         for ($i = 1; $i <= 12; $i++) {

@@ -38,28 +38,28 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">NIM <span class="text-red-500">*</span></label>
-                                <input type="text" name="nim" placeholder="Contoh: 240102122" class="w-full bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-blue-500 block p-3 outline-none" required>
+                                <input type="text" name="nim" value="{{ auth()->user()->nim }}" readonly class="w-full bg-gray-100 border border-gray-200 text-sm rounded-lg text-gray-500 cursor-not-allowed block p-3 outline-none" required>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
-                                <input type="text" name="nama" placeholder="Contoh: Sulis Rahayu" class="w-full bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-blue-500 block p-3 outline-none" required>
+                                <input type="text" name="nama" value="{{ auth()->user()->name }}" readonly class="w-full bg-gray-100 border border-gray-200 text-sm rounded-lg text-gray-500 cursor-not-allowed block p-3 outline-none" required>
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email Mahasiswa <span class="text-red-500">*</span></label>
-                            <input type="email" name="email" placeholder="Contoh: sulis@pnc.ac.id" class="w-full bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-blue-500 block p-3 outline-none" required>
+                            <input type="email" name="email" value="{{ auth()->user()->email }}" readonly class="w-full bg-gray-100 border border-gray-200 text-sm rounded-lg text-gray-500 cursor-not-allowed block p-3 outline-none" required>
                             <p class="text-[11px] text-gray-400 mt-1">Notifikasi pengajuan akan dikirimkan ke email ini.</p>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Program Studi <span class="text-red-500">*</span></label>
-                                <input type="text" name="prodi" placeholder="Contoh: Teknik Informatika" class="w-full bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-blue-500 block p-3 outline-none" required>
+                                <input type="text" name="prodi" value="{{ auth()->user()->prodi }}" readonly class="w-full bg-gray-100 border border-gray-200 text-sm rounded-lg text-gray-500 cursor-not-allowed block p-3 outline-none" required>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Angkatan <span class="text-red-500">*</span></label>
-                                <input type="text" name="angkatan" placeholder="Contoh: 2024" class="w-full bg-gray-50 border border-gray-200 text-sm rounded-lg focus:ring-blue-500 block p-3 outline-none" required>
+                                <input type="text" name="angkatan" value="{{ auth()->user()->angkatan }}" readonly class="w-full bg-gray-100 border border-gray-200 text-sm rounded-lg text-gray-500 cursor-not-allowed block p-3 outline-none" required>
                             </div>
                         </div>
 

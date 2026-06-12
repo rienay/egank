@@ -28,6 +28,18 @@ return new class extends Migration
             $table->integer('semester')->nullable();
             $table->string('angkatan')->nullable();
 
+            // Kolom Profil Tambahan & Foto
+            $table->string('phone')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('rt_rw')->nullable();
+            $table->string('kelurahan')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('nama_dosen_pembimbing')->nullable();
+            $table->string('photo')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

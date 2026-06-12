@@ -81,7 +81,7 @@
                                 </button>
 
                                 @if(isset($lastSurat) && $lastSurat->status == 'disetujui')
-                                    <a href="{{ route('pengajuan_surat.pdf', $lastSurat->id) }}" class="text-green-600 hover:text-green-800 transition" title="Unduh Surat Pengantar">
+                                    <a href="{{ route('pengajuan_surat.pdf', $lastSurat->id) }}" target="_blank" class="text-green-600 hover:text-green-800 transition" title="Unduh Surat Pengantar">
                                         <i class="fas fa-download text-lg"></i>
                                     </a>
                                 @else
@@ -105,126 +105,6 @@
                                 @endif
                             </td>
                     </tr>
-
-                    <div id="modal-detail-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
-                        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full overflow-hidden transform transition-all">
-                            <div class="p-6 md:p-8">
-                                <h3 class="font-bold text-xl text-[#111827] mb-6">Detail Pengajuan</h3>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                    <div>
-                                        <p class="text-sm text-gray-500 mb-1">Nama Perusahaan</p>
-                                        <p class="font-medium text-[#111827]">{{ $data->perusahaan }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500 mb-1">Status Surat</p>
-                                        @if($lastSurat)
-                                            @if($lastSurat->status == 'disetujui')
-                                                <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium">Disetujui</span>
-                                            @elseif($lastSurat->status == 'ditolak')
-                                                <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded font-medium">Ditolak</span>
-                                            @else
-                                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded font-medium">Menunggu</span>
-                                            @endif
-                                        @else
-                                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">Belum Ada Surat</span>
-                                        @endif
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <p class="text-sm text-gray-500 mb-1">Alamat Perusahaan</p>
-                                        <p class="font-medium text-[#111827]">{{ $data->alamat }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500 mb-1">Tanggal Mulai</p>
-                                        <p class="font-medium text-[#111827]">{{ date('j M Y', strtotime($data->tgl_mulai)) }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500 mb-1">Tanggal Selesai</p>
-                                        <p class="font-medium text-[#111827]">{{ date('j M Y', strtotime($data->tgl_selesai)) }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500 mb-1">Tanggal Pengajuan</p>
-                                        <p class="font-medium text-[#111827]">{{ $data->created_at->format('j M Y') }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-500 mb-1">Status Magang</p>
-                                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">{{ $data->status_magang }}</span>
-                                    </div>
-                                    <div class="md:col-span-2">
-                                        <p class="text-sm text-gray-500 mb-1">Keterangan dari Admin</p>
-                                        @if($lastSurat && $lastSurat->status == 'ditolak' && $lastSurat->alasan_penolakan)
-                                            <p class="font-medium text-red-700 bg-red-50 p-3 rounded-lg text-sm">{{ $lastSurat->alasan_penolakan }}</p>
-                                        @elseif($data->keterangan)
-                                            <p class="font-medium text-gray-800 bg-gray-50 p-3 rounded-lg text-sm">{{ $data->keterangan }}</p>
-                                        @else
-                                            <p class="text-sm text-gray-500 italic">Tidak ada keterangan.</p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-end">
-                                    <button onclick="closeModal('modal-detail-{{ $data->id }}')" class="px-5 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Tutup</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="modal-mulai-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
-                        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 md:p-8 transform transition-all">
-                            <h3 class="font-bold text-xl text-[#111827] mb-6">Konfirmasi Mulai Magang</h3>
-                            
-                            <div class="bg-blue-50/50 border border-blue-100 rounded-lg p-4 mb-6">
-                                <p class="text-sm font-bold text-blue-900 mb-1">Perusahaan:</p>
-                                <p class="text-sm text-blue-800 mb-3">{{ $data->perusahaan }}</p>
-                                <p class="text-sm font-bold text-blue-900 mb-1">Periode:</p>
-                                <p class="text-sm text-blue-800">{{ date('j M Y', strtotime($data->tgl_mulai)) }} - {{ date('j M Y', strtotime($data->tgl_selesai)) }}</p>
-                            </div>
-
-                            <p class="text-gray-600 text-sm leading-relaxed mb-8">
-                                Dengan mengkonfirmasi, status magang Anda akan berubah menjadi <span class="font-bold text-blue-600">"Sedang Magang"</span> dan admin akan dapat melihat status terkini Anda di dashboard.
-                            </p>
-
-                            <form action="{{ route('riwayat.update_status', $data->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="status_magang" value="Sedang Magang">
-                                <div class="flex justify-end gap-3">
-                                    <button type="button" onclick="closeModal('modal-mulai-{{ $data->id }}')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Batal</button>
-                                    <button type="submit" class="px-4 py-2 bg-[#2563eb] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition flex items-center gap-2">
-                                        <i class="far fa-check-circle"></i> Konfirmasi Mulai Magang
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="modal-selesai-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
-                        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 md:p-8 transform transition-all">
-                            <h3 class="font-bold text-xl text-[#111827] mb-6">Konfirmasi Selesai Magang</h3>
-                            
-                            <div class="bg-purple-50/50 border border-purple-100 rounded-lg p-4 mb-6">
-                                <p class="text-sm font-bold text-purple-900 mb-1">Perusahaan:</p>
-                                <p class="text-sm text-purple-800 mb-3">{{ $data->perusahaan }}</p>
-                                <p class="text-sm font-bold text-purple-900 mb-1">Periode:</p>
-                                <p class="text-sm text-purple-800">{{ date('j M Y', strtotime($data->tgl_mulai)) }} - {{ date('j M Y', strtotime($data->tgl_selesai)) }}</p>
-                            </div>
-
-                            <p class="text-gray-600 text-sm leading-relaxed mb-8">
-                                Dengan mengkonfirmasi, status magang Anda akan berubah menjadi <span class="font-bold text-purple-600">"Selesai"</span> dan admin akan dapat melihat status terkini Anda di dashboard.
-                            </p>
-
-                            <form action="{{ route('riwayat.update_status', $data->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="status_magang" value="Selesai">
-                                <div class="flex justify-end gap-3">
-                                    <button type="button" onclick="closeModal('modal-selesai-{{ $data->id }}')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Batal</button>
-                                    <button type="submit" class="px-4 py-2 bg-[#9333ea] text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition flex items-center gap-2">
-                                        <i class="far fa-check-circle"></i> Konfirmasi Selesai Magang
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
                     @empty
                     <tr>
                         <td colspan="7" class="py-12 text-center text-gray-500">Belum ada riwayat pengajuan surat.</td>
@@ -233,6 +113,131 @@
                 </tbody>
             </table>
         </div>
+
+        @foreach($riwayat as $data)
+            @php
+                $lastSurat = $data->pengajuanSurats->sortByDesc('created_at')->first();
+            @endphp
+
+            <div id="modal-detail-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
+                <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full overflow-hidden transform transition-all">
+                    <div class="p-6 md:p-8">
+                        <h3 class="font-bold text-xl text-[#111827] mb-6">Detail Pengajuan</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Nama Perusahaan</p>
+                                <p class="font-medium text-[#111827]">{{ $data->perusahaan }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Status Surat</p>
+                                @if($lastSurat)
+                                    @if($lastSurat->status == 'disetujui')
+                                        <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-medium">Disetujui</span>
+                                    @elseif($lastSurat->status == 'ditolak')
+                                        <span class="bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded font-medium">Ditolak</span>
+                                    @else
+                                        <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5 rounded font-medium">Menunggu</span>
+                                    @endif
+                                @else
+                                    <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">Belum Ada Surat</span>
+                                @endif
+                            </div>
+                            <div class="md:col-span-2">
+                                <p class="text-sm text-gray-500 mb-1">Alamat Perusahaan</p>
+                                <p class="font-medium text-[#111827]">{{ $data->alamat }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Tanggal Mulai</p>
+                                <p class="font-medium text-[#111827]">{{ date('j M Y', strtotime($data->tgl_mulai)) }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Tanggal Selesai</p>
+                                <p class="font-medium text-[#111827]">{{ date('j M Y', strtotime($data->tgl_selesai)) }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Tanggal Pengajuan</p>
+                                <p class="font-medium text-[#111827]">{{ $data->created_at->format('j M Y') }}</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Status Magang</p>
+                                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">{{ $data->status_magang }}</span>
+                            </div>
+                            <div class="md:col-span-2">
+                                <p class="text-sm text-gray-500 mb-1">Keterangan dari Admin</p>
+                                @if($lastSurat && $lastSurat->status == 'ditolak' && $lastSurat->alasan_penolakan)
+                                    <p class="font-medium text-red-700 bg-red-50 p-3 rounded-lg text-sm">{{ $lastSurat->alasan_penolakan }}</p>
+                                @elseif($data->keterangan)
+                                    <p class="font-medium text-gray-800 bg-gray-50 p-3 rounded-lg text-sm">{{ $data->keterangan }}</p>
+                                @else
+                                    <p class="text-sm text-gray-500 italic">Tidak ada keterangan.</p>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button onclick="closeModal('modal-detail-{{ $data->id }}')" class="px-5 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-mulai-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
+                <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 md:p-8 transform transition-all">
+                    <h3 class="font-bold text-xl text-[#111827] mb-6">Konfirmasi Mulai Magang</h3>
+                    
+                    <div class="bg-blue-50/50 border border-blue-100 rounded-lg p-4 mb-6">
+                        <p class="text-sm font-bold text-blue-900 mb-1">Perusahaan:</p>
+                        <p class="text-sm text-blue-800 mb-3">{{ $data->perusahaan }}</p>
+                        <p class="text-sm font-bold text-blue-900 mb-1">Periode:</p>
+                        <p class="text-sm text-blue-800">{{ date('j M Y', strtotime($data->tgl_mulai)) }} - {{ date('j M Y', strtotime($data->tgl_selesai)) }}</p>
+                    </div>
+
+                    <p class="text-gray-600 text-sm leading-relaxed mb-8">
+                        Dengan mengkonfirmasi, status magang Anda akan berubah menjadi <span class="font-bold text-blue-600">"Sedang Magang"</span> dan admin akan dapat melihat status terkini Anda di dashboard.
+                    </p>
+
+                    <form action="{{ route('riwayat.update_status', $data->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="status_magang" value="Sedang Magang">
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="closeModal('modal-mulai-{{ $data->id }}')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Batal</button>
+                            <button type="submit" class="px-4 py-2 bg-[#2563eb] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition flex items-center gap-2">
+                                <i class="far fa-check-circle"></i> Konfirmasi Mulai Magang
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="modal-selesai-{{ $data->id }}" class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center backdrop-blur-sm px-4">
+                <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 md:p-8 transform transition-all">
+                    <h3 class="font-bold text-xl text-[#111827] mb-6">Konfirmasi Selesai Magang</h3>
+                    
+                    <div class="bg-purple-50/50 border border-purple-100 rounded-lg p-4 mb-6">
+                        <p class="text-sm font-bold text-purple-900 mb-1">Perusahaan:</p>
+                        <p class="text-sm text-purple-800 mb-3">{{ $data->perusahaan }}</p>
+                        <p class="text-sm font-bold text-purple-900 mb-1">Periode:</p>
+                        <p class="text-sm text-purple-800">{{ date('j M Y', strtotime($data->tgl_mulai)) }} - {{ date('j M Y', strtotime($data->tgl_selesai)) }}</p>
+                    </div>
+
+                    <p class="text-gray-600 text-sm leading-relaxed mb-8">
+                        Dengan mengkonfirmasi, status magang Anda akan berubah menjadi <span class="font-bold text-purple-600">"Selesai"</span> dan admin akan dapat melihat status terkini Anda di dashboard.
+                    </p>
+
+                    <form action="{{ route('riwayat.update_status', $data->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="status_magang" value="Selesai">
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="closeModal('modal-selesai-{{ $data->id }}')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition">Batal</button>
+                            <button type="submit" class="px-4 py-2 bg-[#9333ea] text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition flex items-center gap-2">
+                                <i class="far fa-check-circle"></i> Konfirmasi Selesai Magang
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endforeach
 
     </div>
 </div>

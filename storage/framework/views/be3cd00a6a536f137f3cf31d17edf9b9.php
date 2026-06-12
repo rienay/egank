@@ -165,7 +165,9 @@
                 <a href="<?php echo e(route('login.form')); ?>" class="<?php echo e(request()->is('login*') ? 'active' : ''); ?>">Ajukan Surat</a>
             <?php endif; ?>
         </li>
-        <li><a href="/riwayat" class="<?php echo e(request()->is('riwayat*') ? 'active' : ''); ?>">Riwayat Surat</a></li>
+        <?php if(auth()->guard()->check()): ?>
+            <li><a href="/riwayat" class="<?php echo e(request()->is('riwayat*') ? 'active' : ''); ?>">Riwayat Surat</a></li>
+        <?php endif; ?>
     </ul>
 
     <div class="profile-section">

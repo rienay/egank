@@ -42,6 +42,7 @@ class PengajuanMagangController extends Controller
         }
 
         $pengajuan = PengajuanMagang::create([
+            'user_id' => Auth::id(),
             'nim' => $request->nim,
             'nama' => $request->nama,
             'email' => $request->email,

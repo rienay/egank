@@ -165,7 +165,9 @@
                 <a href="{{ route('login.form') }}" class="{{ request()->is('login*') ? 'active' : '' }}">Ajukan Surat</a>
             @endauth
         </li>
-        <li><a href="/riwayat" class="{{ request()->is('riwayat*') ? 'active' : '' }}">Riwayat Surat</a></li>
+        @auth
+            <li><a href="/riwayat" class="{{ request()->is('riwayat*') ? 'active' : '' }}">Riwayat Surat</a></li>
+        @endauth
     </ul>
 
     <div class="profile-section">
