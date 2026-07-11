@@ -2,6 +2,24 @@
 
 @section('content')
 <div class="container-fluid px-4 py-4">
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="row mb-4">
         <div class="col">
             <h2 class="fw-bold text-dark mb-1">Detail Pengajuan Surat Magang</h2>
@@ -122,7 +140,7 @@
                         <div class="col-md-6">
                             <div class="d-flex align-items-center p-3 border rounded">
                                 <div class="flex-shrink-0 me-3">
-                                    @php $ext = pathinfo($file, PATHINFO_EXTENSION); @endphp
+                                    @php $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION)); @endphp
                                     @if(in_array($ext, ['jpg','jpeg','png']))
                                     <i class="bi bi-file-earmark-image text-primary fs-2"></i>
                                     @else

@@ -105,7 +105,6 @@
             </div>
         </td>
         <td class="logo-col" style="width: 15%; vertical-align: middle;">
-            <!-- Kolom kosong penyeimbang agar teks tengah terpusat sempurna -->
         </td>
     </tr>
 </table>
@@ -182,11 +181,6 @@
     <table style="width: 100%; border: none; border-collapse: collapse;">
         <tr>
             <td style="width: 55%; border: none; vertical-align: top; padding: 0;">
-                <div class="tembusan" style="margin-top: 60px; font-size: 9.5pt; line-height: 1.3;">
-                    Tembusan Yth :<br>
-                    1. Ketua Jurusan Komputer dan Bisnis.<br>
-                    2. Arsip.
-                </div>
             </td>
             <td style="width: 45%; border: none; text-align: center; vertical-align: top; padding: 0;">
                 <p style="margin: 0; line-height: 1.3;">a.n Direktur,</p>
