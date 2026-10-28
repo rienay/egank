@@ -8,3 +8,4 @@ storage/app/public/qrcodes/*
 storage/logs/*.log
 database/database.sqlite
 .env
+

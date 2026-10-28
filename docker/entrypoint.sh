@@ -56,3 +56,4 @@ php artisan view:cache || true
 
 echo "Starting Apache on port ${PORT}..."
 exec apache2-foreground
+

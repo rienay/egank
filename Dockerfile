@@ -74,3 +74,4 @@ ENV PORT=10000
 EXPOSE ${PORT}
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
