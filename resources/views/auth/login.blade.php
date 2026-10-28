@@ -70,14 +70,14 @@
         }
 
         .container {
-            width: 1100px;
+            width: 880px;
             max-width: 100%;
-            min-height: 680px;
+            min-height: 520px;
             display: grid;
-            grid-template-columns: 1.05fr .95fr;
+            grid-template-columns: 1fr 1fr;
             background: rgba(255, 255, 255, .97);
             backdrop-filter: blur(10px);
-            border-radius: 32px;
+            border-radius: 24px;
             overflow: hidden;
             box-shadow:
                 0 20px 60px rgba(15, 23, 42, .25),
@@ -88,7 +88,7 @@
 
         .left {
             position: relative;
-            padding: 60px;
+            padding: 40px 36px;
             color: white;
             display: flex;
             flex-direction: column;
@@ -113,43 +113,43 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 24px;
+            gap: 12px;
+            font-size: 20px;
             font-weight: 800;
             letter-spacing: .5px;
         }
 
         .brand-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, .18);
             display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, .15);
-            font-size: 22px;
+            font-size: 18px;
         }
 
         .hero-text h1 {
-            font-size: 52px;
-            line-height: 1.1;
-            margin-bottom: 20px;
+            font-size: 32px;
+            line-height: 1.15;
+            margin-bottom: 12px;
             font-weight: 800;
         }
 
         .hero-text p {
-            font-size: 17px;
-            line-height: 1.8;
-            max-width: 420px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            max-width: 360px;
             opacity: .92;
         }
 
         .feature-box {
-            margin-top: 35px;
+            margin-top: 24px;
             display: flex;
-            gap: 16px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -157,16 +157,16 @@
             background: rgba(255, 255, 255, .12);
             border: 1px solid rgba(255, 255, 255, .15);
             backdrop-filter: blur(12px);
-            padding: 14px 18px;
-            border-radius: 16px;
-            font-size: 14px;
+            padding: 9px 13px;
+            border-radius: 12px;
+            font-size: 12.5px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .right {
-            padding: 70px;
+            padding: 44px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -177,50 +177,50 @@
             width: max-content;
             background: #dbeafe;
             color: var(--primary);
-            padding: 8px 16px;
+            padding: 5px 12px;
             border-radius: 999px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
         }
 
         .header h2 {
-            font-size: 40px;
+            font-size: 26px;
             color: var(--text);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
         }
 
         .header p {
             color: var(--text-soft);
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 38px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            margin-bottom: 22px;
         }
 
         .error-box {
             background: var(--danger-bg);
             border: 1px solid #fecaca;
             color: var(--danger);
-            padding: 16px 18px;
-            border-radius: 16px;
-            margin-bottom: 28px;
+            padding: 11px 14px;
+            border-radius: 12px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
+            gap: 10px;
+            font-size: 13px;
             font-weight: 500;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
-            font-size: 14px;
+            margin-bottom: 6px;
+            font-size: 13px;
             color: var(--text);
             font-weight: 700;
         }
@@ -232,21 +232,22 @@
         .input-icon {
             position: absolute;
             top: 50%;
-            left: 18px;
+            left: 15px;
             transform: translateY(-50%);
             color: #94a3b8;
-            font-size: 16px;
+            font-size: 14px;
             transition: .3s;
         }
 
         .toggle-password {
             position: absolute;
             top: 50%;
-            right: 18px;
+            right: 15px;
             transform: translateY(-50%);
             color: #94a3b8;
             cursor: pointer;
             transition: .3s;
+            font-size: 14px;
         }
 
         .toggle-password:hover {
@@ -255,12 +256,12 @@
 
         input {
             width: 100%;
-            height: 60px;
-            border-radius: 18px;
-            border: 1.8px solid #e2e8f0;
+            height: 46px;
+            border-radius: 12px;
+            border: 1.6px solid #e2e8f0;
             background: #f8fafc;
-            padding: 0 50px 0 52px;
-            font-size: 15px;
+            padding: 0 42px 0 42px;
+            font-size: 14px;
             transition: .3s;
             color: var(--text);
         }
@@ -269,7 +270,7 @@
             outline: none;
             border-color: var(--primary);
             background: white;
-            box-shadow: 0 0 0 5px rgba(37, 99, 235, .12);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
         }
 
         .input-wrapper:focus-within .input-icon {
@@ -280,15 +281,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: -6px;
-            margin-bottom: 28px;
-            font-size: 14px;
+            margin-top: -2px;
+            margin-bottom: 20px;
+            font-size: 13px;
         }
 
         .remember {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             color: var(--text-soft);
         }
 
@@ -310,28 +311,28 @@
         .btn {
             width: 100%;
             border: none;
-            height: 60px;
-            border-radius: 18px;
+            height: 48px;
+            border-radius: 12px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            font-size: 16px;
+            font-size: 14.5px;
             font-weight: 700;
             cursor: pointer;
             transition: .3s;
-            box-shadow: 0 15px 30px rgba(37, 99, 235, .25);
+            box-shadow: 0 10px 22px rgba(37, 99, 235, .25);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 35px rgba(37, 99, 235, .35);
+            box-shadow: 0 14px 28px rgba(37, 99, 235, .32);
         }
 
         .footer-note {
-            margin-top: 35px;
+            margin-top: 20px;
             text-align: center;
             color: var(--text-soft);
-            font-size: 14px;
-            line-height: 1.7;
+            font-size: 12.5px;
+            line-height: 1.5;
         }
 
         .footer-note strong {
@@ -341,7 +342,7 @@
         @media(max-width:960px) {
             .container {
                 grid-template-columns: 1fr;
-                max-width: 560px;
+                max-width: 460px;
             }
 
             .left {
@@ -349,33 +350,33 @@
             }
 
             .right {
-                padding: 45px 30px;
+                padding: 36px 24px;
             }
 
             .header h2 {
-                font-size: 32px;
+                font-size: 24px;
             }
         }
 
         @media(max-width:480px) {
             body {
-                padding: 16px;
+                padding: 14px;
             }
 
             .right {
-                padding: 35px 22px;
+                padding: 28px 18px;
             }
 
             .header h2 {
-                font-size: 28px;
+                font-size: 22px;
             }
 
             input {
-                height: 56px;
+                height: 44px;
             }
 
             .btn {
-                height: 56px;
+                height: 44px;
             }
         }
     </style>
