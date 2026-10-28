@@ -12,6 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustProxies(at: '*');
+
         // Jurus pamungkas: Bypass validasi CSRF khusus untuk rute Autentikasi
         // Biar nggak kena 419 Page Expired terus di local/Laragon
         $middleware->validateCsrfTokens(except: [
