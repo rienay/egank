@@ -69,8 +69,16 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Render sets PORT dynamically (defaults to 10000)
-ENV PORT=10000
+# Default Environment Variables (so Render can run without manual input)
+ENV APP_NAME="e-Gang" \
+    APP_ENV="production" \
+    APP_DEBUG="true" \
+    APP_KEY="base64:cBqlb3Ska1+oBLgbVF96HkbJEeqSPPuhG7+6Dgm4XLg=" \
+    LOG_CHANNEL="stderr" \
+    DB_CONNECTION="sqlite" \
+    SESSION_DRIVER="database" \
+    PORT=10000
+
 EXPOSE ${PORT}
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
