@@ -1,0 +1,10 @@
+.git
+.github
+node_modules
+vendor
+public/build
+public/storage
+storage/app/public/qrcodes/*
+storage/logs/*.log
+database/database.sqlite
+.env
